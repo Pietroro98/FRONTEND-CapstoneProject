@@ -15,13 +15,13 @@ function HeroSection() {
           >
             <h2 className="hero-subtitle text-light text-center text-sm-start text-uppercase">Costruisci il tuo fisico</h2>
             <h1 className="hero-title text-light text-center text-sm-start fw-bold text-uppercase">
-                Ciao <span className="text-purple">sono</span> & <span className="text-purple">Pietro</span>
+                Be <span className="text-purple"> Fit</span> & <span className="text-purple">strong</span>
             </h1>
-            <p className="text-center text-sm-start text-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores repudiandae vel odio modi laboriosam aliquam nihil aut? Odit, deleniti maxime atque odio dicta nulla. Veniam ducimus officiis perferendis incidunt amet.
-            </p>
+            {/* <p className="text-center text-sm-start text-light">Essere in forma e forti non è solo una questione di apparenza, ma di potere personale. Ogni passo, ogni scelta sana, ogni momento dedicato al tuo benessere ti avvicina alla versione migliore di te stesso.
+            </p> */}
             <div>
-                <button className="btn btn-light btn-lg rounded-0 text-capitalize">
-                    inizia 
+                <button className="btn btn-light btn-lg rounded-5  text-capitalize">
+                    get started
                 </button>
             </div>
           </motion.div>
