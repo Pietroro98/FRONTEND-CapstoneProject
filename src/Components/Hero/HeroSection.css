@@ -1,0 +1,19 @@
+header{
+    background-image:url(../../Assets/Img/hero-img.jpg);
+ background-size: cover;
+ background-position: center;
+}
+
+.hero-title{
+    font-size: 5rem;
+}
+
+.hero-subtitle {
+    font-size: 15px;
+}
+
+@media screen and (max-width: 990px) {
+    .hero-title{
+        font-size: 4.5rem;
+    }
+}
