@@ -1,0 +1,19 @@
+.footer-section {
+    background-image:url(../../Assets/Imgs/img5.avif);
+    background-size: cover;
+    background-position: center;
+}
+
+.footer-section .bg-shape {
+    width: 50%;
+    background-color: #251f30b9;
+    background-size: cover;
+    bottom: 0;
+    top: 0;
+}
+
+@media screen and (max-width: 768px){
+    .footer-section .bg-shape {
+        width: 100%;
+    }
+}
