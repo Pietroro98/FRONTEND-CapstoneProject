@@ -5,9 +5,9 @@
     font-size: 3rem;
 }
 
-.motion-container {
+/* .motion-container {
     position: relative;
-}
+} */
 
 @media screen and (max-width: 768px) {
     #servizi .card-title {
