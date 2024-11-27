@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import img1 from "../../Assets/Imgs/img1.jpg"
+import img2 from "../../Assets/Imgs/img2.jpg"
 import NavbarButton from "../Buttons/NavbarButton";
 
 function AboutSection() {
@@ -14,10 +14,10 @@ function AboutSection() {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1 }}
                 >
-                    <img className="img-fluid w-75 mt-4 mt-lg-0" src={img1} alt="about img"/>
+                    <img className="img-fluid w-75 mt-4 mt-lg-0" src={img2} alt="about img"/>
                 </motion.div>
                 <motion.div 
-                    className="col-lg-6 d-flex flex-column justify-contenmt-center align-items-start"
+                    className="col-lg-6 d-flex flex-column justify-content-center align-items-start"
                     initial={{ opacity: 0, x: -350 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1 }}

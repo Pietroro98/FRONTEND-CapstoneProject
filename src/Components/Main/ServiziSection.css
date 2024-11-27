@@ -1,0 +1,16 @@
+#servizi .card-title {
+    font-size: 2rem;
+}
+#servizi svg{
+    font-size: 3rem;
+}
+
+.motion-container {
+    position: relative;
+}
+
+@media screen and (max-width: 768px) {
+    #servizi .card-title {
+        font-size: 1.75rem;
+    }
+}
