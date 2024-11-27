@@ -2,7 +2,7 @@ import React from "react";
 
 function ServiceSection() {
   return(
-    <div>ServiceSection</div>
+    <div></div>
   ) 
 }
 
