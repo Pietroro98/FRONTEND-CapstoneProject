@@ -1,18 +1,20 @@
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from 'react-redux';
-import { loginU } from '../redux/reducers/authSlice';
+import { useDispatch } from "react-redux";
+import { loginU } from "../redux/reducers/authSlice";
+import "./Login/Login.css";
+import { motion } from "framer-motion";
+import { Form, Button, Container } from "react-bootstrap";
 
 function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // Riferimenti ai campi del form
   const emailRef = useRef();
   const passwordRef = useRef();
   const nomeRef = useRef();
   const cognomeRef = useRef();
-  const usernameRef = useRef(); // Aggiungi un riferimento per username
+  const usernameRef = useRef(); 
 
   const handleRegister = async () => {
     // Ottieni i valori dai riferimenti
@@ -20,105 +22,168 @@ function Register() {
     const password = passwordRef.current.value;
     const nome = nomeRef.current.value;
     const cognome = cognomeRef.current.value;
-    const username = usernameRef.current.value || email.split('@')[0]; // Usa l'email per derivare un username se non è specificato
-
+    const username = usernameRef.current.value || email.split("@")[0]; // Usa l'email per derivare un username se non è specificato
+  
     const userData = {
-      username: username, // Usa il campo 'username' fornito dall'utente, o derivato dall'email
-      nome: nome,
-      cognome: cognome,
-      email: email,
-      password: password,
+      username: username,
+      name: nome,
+      surname: cognome,
+      email: email, 
+      password: password
     };
+  
 
     // Effettua la richiesta POST
     try {
-      const response = await fetch('http://localhost:3001/auth/register', {
-        method: 'POST',
+      const response = await fetch("http://localhost:3001/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify(userData),
       });
 
       const result = await response.json();
 
       if (response.ok) {
-
-        //dispatch(loginU(result)); 
-        navigate("/login"); 
+        //dispatch(loginU(result));
+        navigate("/login");
       } else {
-        // Gestisci gli errori
-        console.error('Errore nella registrazione:', result);
-        alert('Errore nella registrazione. Prova di nuovo.');
+        console.error("Errore nella registrazione:", result);
+        alert("Errore nella registrazione. Prova di nuovo.");
       }
     } catch (error) {
-      console.error('Errore nella connessione:', error);
-      alert('Errore nella connessione. Riprova.');
+      console.error("Errore nella connessione:", error);
+      alert("Errore nella connessione. Riprova.");
     }
-  }
+  };
 
   return (
-    <div className='Page'>
-      <div className="ciao container">
-        <section className="gradient-custom">
-          <div className="container py-1">
-            <div className="row d-flex justify-content-center align-items-center h-70">
-              <div className="col-12 col-md-8 col-lg-6 col-xl-5">
-                <div className="card bg-dark text-white" style={{borderRadius: "2rem"}}>
-                  <div className="card-body p-5 text-center">
-
-                    <div className="mb-md-5 mt-md-4 pb-5">
-
-                      <h2 className="fw-bold mb-2 text-uppercase">Ghysa Gym App</h2>
-                      <h2 className="fw-bold mb-2 text-uppercase">Register</h2>
-                      <p className="text-white-50 mb-5">Please enter your email and password</p>
-
-                      {/* Campo per username */}
-                      <div className="form-outline form-white mb-4">
-                        <label className="form-label" htmlFor="typeUsernameX">Username</label>
-                        <input ref={usernameRef} type="text" id="typeUsernameX" className="form-control form-control-lg" placeholder="Inserisci username" />
-                      </div>
-
-                      {/* Campo per email */}
-                      <div className="form-outline form-white mb-4">
-                        <label className="form-label" htmlFor="typeEmailX">Email</label>
-                        <input ref={emailRef} type="email" id="typeEmailX" className="form-control form-control-lg" placeholder="Inserisci email" />
-                      </div>
-
-                      {/* Campo per password */}
-                      <div className="form-outline form-white mb-4">
-                        <label className="form-label" htmlFor="typePasswordX">Password</label>
-                        <input ref={passwordRef} type="text" id="typePasswordX" className="form-control form-control-lg" placeholder="Inserisci password" />
-                      </div>
-
-                      {/* Campo per nome */}
-                      <div className="form-outline form-white mb-4">
-                        <label className="form-label" htmlFor="typeNomeX">Nome</label>
-                        <input ref={nomeRef} type="text" id="typeNomeX" className="form-control form-control-lg" placeholder="Inserisci nome" />
-                      </div>
-
-                      {/* Campo per cognome */}
-                      <div className="form-outline form-white mb-4">
-                        <label className="form-label" htmlFor="typeCognomeX">Cognome</label>
-                        <input ref={cognomeRef} type="text" id="typeCognomeX" className="form-control form-control-lg" placeholder="Inserisci cognome" />
-                      </div>
-
-                      <button className="btn btn-outline-light btn-lg px-5" type="submit" onClick={handleRegister}>Register</button>
-                    </div>
-
-                    <div>
-                      <p className="mb-0">Hai già un account? <a style={{ cursor: 'pointer' }} onClick={() => {navigate("/login")}} className="text-white-50 fw-bold">Accedi</a></p>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+    <header>
+      {/* <div className="container">
+      <div className="row">
+        <motion.div
+          className="col-md-6 d-flex flex-column justify-content-start align-items-center align-items-sm-start"
+          initial={{ opacity: 0, x: -300 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h2 className="hero-subtitle text-light text-center text-sm-start text-uppercase">Join & Test Your Body</h2>
+          <h1 className="hero-title text-light text-center text-sm-start fw-bold text-uppercase">
+              Join <span className="text-purple"> & </span> Test <span className="text-purple"> Your Body </span>
+          </h1>
+        </motion.div>
       </div>
-    </div>
-  )
+    </div> */}
+
+      <Container
+        className="d-flex justify-content-center align-items-center min-vh-100"
+        style={{
+          backgroundImage: "url('path/to/your/image.jpg')",
+          backgroundSize: "cover",
+        }}
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="login-card p-5 rounded shadow-lg w-100 w-md-50 text-light"
+        >
+          <h1 className="login-title text-center mb-3">Register</h1>
+          <p className="login-description text-center mb-4">
+            Please enter your details
+          </p>
+
+          {/* Form di registrazione */}
+          <Form>
+            {/* Campo per Username */}
+            <Form.Group controlId="username" className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <div className="input-with-icon position-relative">
+                <Form.Control
+                  type="text"
+                  ref={usernameRef}
+                  placeholder="Enter your username"
+                  className="ps-5"
+                />
+              </div>
+            </Form.Group>
+
+            {/* Campo per Name */}
+            <Form.Group controlId="name" className="mb-3">
+              <Form.Label>Nome</Form.Label>
+              <div className="input-with-icon position-relative">
+                <Form.Control
+                  type="text"
+                  ref={nomeRef}
+                  placeholder="Enter your name"
+                  className="ps-5"
+                />
+              </div>
+            </Form.Group>
+
+            {/* Campo per Surname */}
+            <Form.Group controlId="surname" className="mb-3">
+              <Form.Label>Cognome</Form.Label>
+              <div className="input-with-icon position-relative">
+                <Form.Control
+                  type="text"
+                  ref={cognomeRef}
+                  placeholder="Enter your surname"
+                  className="ps-5"
+                />
+              </div>
+            </Form.Group>
+
+            {/* Campo per Email */}
+            <Form.Group controlId="email" className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <div className="input-with-icon position-relative">
+                <Form.Control
+                  type="email"
+                  ref={emailRef}
+                  placeholder="Enter your email"
+                  className="ps-5"
+                />
+              </div>
+            </Form.Group>
+
+            {/* Campo per Password */}
+            <Form.Group controlId="password" className="mb-3">
+              <Form.Label>Password</Form.Label>
+              <div className="input-with-icon position-relative">
+                <Form.Control
+                  type="password"
+                  ref={passwordRef}
+                  placeholder="Enter your password"
+                  className="ps-5"
+                />
+              </div>
+            </Form.Group>
+
+            {/* Pulsante di registrazione */}
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button className="w-100 login-style" onClick={handleRegister}>
+                Register
+              </Button>
+            </motion.div>
+          </Form>
+
+          <div className="text-center mt-4">
+            <span className="text-light">
+              Already have an account?{" "}
+              <span
+                className="text-purple cursor-pointer"
+                onClick={() => navigate("/login")}
+              >
+                Log in
+              </span>
+            </span>
+          </div>
+        </motion.div>
+      </Container>
+    </header>
+  );
 }
 
 export default Register;
