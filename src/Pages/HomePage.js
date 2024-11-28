@@ -4,7 +4,9 @@ import AboutSection from "./Components/Main/AboutSection";
 import ServiceSection from "./Components/Main/ServiceSection";
 import MyNavBar from "./Components/Mynav/MyNavBar";
 import FooterSection from "./Components/Main/FooterSection";
-function App() {
+
+
+function HomePage() {
   return (
     <div className="App">
       <MyNavBar />
@@ -16,4 +18,4 @@ function App() {
   );
 }
 
-export default App;
+export default HomePage;
