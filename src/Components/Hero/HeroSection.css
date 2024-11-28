@@ -8,6 +8,11 @@ header {
   font-size: 5rem;
 }
 
+.get-started:hover{
+  background-color: var(--primary-color)!important;
+  border-color: var(--primary-color)!important ;
+
+}
 .hero-subtitle {
   font-size: 15px;
 }

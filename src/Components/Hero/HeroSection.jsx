@@ -20,7 +20,7 @@ function HeroSection() {
             {/* <p className="text-center text-sm-start text-light">Essere in forma e forti non è solo una questione di apparenza, ma di potere personale. Ogni passo, ogni scelta sana, ogni momento dedicato al tuo benessere ti avvicina alla versione migliore di te stesso.
             </p> */}
             <div>
-                <button className="btn btn-success btn-lg rounded-5 text-capitalize">
+                <button className="get-started btn btn-light btn-lg rounded-5 text-capitalize">
                     get started
                 </button>
             </div>
