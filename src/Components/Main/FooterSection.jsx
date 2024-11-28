@@ -14,7 +14,7 @@ function FooterSection() {
         >
         </motion.div>
         <Container>
-            <div className="row">
+            <div className="row ">
                 <div className="col-md-4 z-2">
                     <h2 className="text-start text-capitalize fw-bold">
                         Alleniamoci Insieme: </h2>

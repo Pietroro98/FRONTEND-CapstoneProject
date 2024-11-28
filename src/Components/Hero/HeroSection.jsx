@@ -1,8 +1,13 @@
 import React from "react";
 import "./HeroSection.css";
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 
 function HeroSection() {
+  const navigate = useNavigate();
+  const handleGetStarted = () => {
+    navigate('/login');
+  };
   return (
     <header className="h-100 min-vh-100 d-flex align-items-center">
       <div className="container">
@@ -20,7 +25,8 @@ function HeroSection() {
             {/* <p className="text-center text-sm-start text-light">Essere in forma e forti non è solo una questione di apparenza, ma di potere personale. Ogni passo, ogni scelta sana, ogni momento dedicato al tuo benessere ti avvicina alla versione migliore di te stesso.
             </p> */}
             <div>
-                <button className="get-started btn btn-light btn-lg rounded-5 text-capitalize">
+                <button className="get-started btn btn-light btn-lg rounded-5 text-capitalize"
+                 onClick={handleGetStarted}>
                     get started
                 </button>
             </div>
