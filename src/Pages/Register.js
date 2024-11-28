@@ -1,20 +1,26 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginU } from "../redux/reducers/authSlice";
+// import { loginU } from "../redux/reducers/authSlice";
 import "./Login/Login.css";
 import { motion } from "framer-motion";
 import { Form, Button, Container } from "react-bootstrap";
+import { Snackbar, Alert } from "@mui/material";
 
 function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Gestione degli stati per il Snackbar
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const nomeRef = useRef();
   const cognomeRef = useRef();
-  const usernameRef = useRef(); 
+  const usernameRef = useRef();
 
   const handleRegister = async () => {
     // Ottieni i valori dai riferimenti
@@ -23,15 +29,14 @@ function Register() {
     const nome = nomeRef.current.value;
     const cognome = cognomeRef.current.value;
     const username = usernameRef.current.value || email.split("@")[0]; // Usa l'email per derivare un username se non è specificato
-  
+
     const userData = {
       username: username,
       name: nome,
       surname: cognome,
-      email: email, 
-      password: password
+      email: email,
+      password: password,
     };
-  
 
     // Effettua la richiesta POST
     try {
@@ -47,18 +52,26 @@ function Register() {
 
       if (response.ok) {
         //dispatch(loginU(result));
-        navigate("/login");
+        setMessage("Registrazione completata con successo!");
+        setSeverity("success"); // Success
+        setOpen(true); // Mostra il popup
+        setTimeout(() => {
+          navigate("/login"); // Redirigi alla pagina di login
+        }, 2000);
       } else {
-        console.error("Errore nella registrazione:", result);
-        alert("Errore nella registrazione. Prova di nuovo.");
+        setMessage("Errore nella registrazione. Riprova.");
+        setSeverity("error"); // Error
+        setOpen(true);
       }
     } catch (error) {
-      console.error("Errore nella connessione:", error);
-      alert("Errore nella connessione. Riprova.");
+        setMessage("Errore nella connessione. Riprova.");
+        setSeverity("error");
+        setOpen(true);
     }
   };
 
   return (
+    <>
     <header>
       {/* <div className="container">
       <div className="row">
@@ -183,6 +196,20 @@ function Register() {
         </motion.div>
       </Container>
     </header>
+    <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={severity}
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
 

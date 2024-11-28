@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { loginU } from '../../redux/reducers/authSlice';
@@ -7,10 +7,16 @@ import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import { Form, Button, Container, } from "react-bootstrap";
+import { Snackbar, Alert } from "@mui/material";
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();  
+
+   // Gestione dello stato per il Snackbar
+   const [open, setOpen] = useState(false);
+   const [message, setMessage] = useState("");
+   const [severity, setSeverity] = useState("success");
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -42,13 +48,22 @@ function Login() {
         localStorage.setItem("isAuth", true);
         console.log(result.accessToken)
         dispatch(loginU(result.token));  // Usa il tuo reducer per il login, se necessario
-        navigate("/");
+        setMessage("Login effettuato con successo!");
+        setSeverity("success"); 
+        setOpen(true); 
+        setTimeout(() => {
+          navigate("/"); // Redirigi alla home dopo 2 secondi
+        }, 2000);
       } else {
-        alert("Credenziali non valide. Riprova.");
+        setMessage("Credenziali non valide. Riprova.");
+        setSeverity("error"); // Error
+        setOpen(true);
       }
     } catch (error) {
       console.error('Errore nella connessione:', error);
-      alert('Errore nella connessione. Riprova.');
+      setMessage('Errore nella connessione. Riprova.');
+      setSeverity("error");
+      setOpen(true);
     }
   }
 
@@ -139,6 +154,19 @@ function Login() {
       </motion.div>
     </Container>
     </header>
+    <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={severity}
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </>
   );
 }
