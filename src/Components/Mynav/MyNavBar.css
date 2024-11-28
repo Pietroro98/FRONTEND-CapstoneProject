@@ -7,6 +7,10 @@
     padding-bottom: 2px;
 }
 
+.nav-link:hover{
+    color: var(--primary-color)!important;
+}
+
 .navbar .navbar-toggler {
     border-color: #ffffff ;
 }
