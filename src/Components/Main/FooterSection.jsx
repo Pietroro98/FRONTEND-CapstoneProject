@@ -21,10 +21,9 @@ function FooterSection() {
                         <p className="text-start">&copy; Romano Pietro</p>
                         <p>- Profilo Instagram :<br/> instagram.com</p>
                         <p>- Profilo LinkedIn :<br/> linkein.com</p>
-
                         <div className="d-flex">
-                            <h5 className="text-capitalize fw-semibold text-nowrap">call us: </h5>
-                            <a href="./" className="mx-2 text-decoration-none h5">090909090</a>
+                            <h5 className="text-capitalize fw-semibold text-nowrap">Write me: </h5>
+                            <a href="./" className="mx-2 text-decoration-none h5"> <br/>pietroro98@gmail.com</a>
                         </div>
 
                 </div>
