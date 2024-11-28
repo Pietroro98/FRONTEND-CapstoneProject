@@ -12,6 +12,12 @@ header {
   font-size: 15px;
 }
 
+@media screen and (max-width: 1024px) {
+  header {
+    background-position: center;
+  }
+}
+
 @media screen and (max-width: 990px) {
   .hero-title {
     font-size: 4.5rem;
@@ -32,3 +38,4 @@ header {
     font-size: 3rem;
   }
 }
+
