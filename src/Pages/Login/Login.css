@@ -1,0 +1,29 @@
+
+header {
+    background-image: url(../../Assets/Imgs/hero-img.jpg);
+    background-size: cover;
+    background-position: left;
+  }
+  /* Card di login */
+  .login-card {
+    max-width: 400px;
+    background: linear-gradient(140deg, #000000, #141414b0);
+  }
+  
+  .login-style {
+    background-color: var(--primary-color)!important;
+    border-color: var(--primary-color)!important;
+  }
+
+  @media screen and (max-width: 1024px) {
+    header {
+      background-position: center;
+    }
+  }
+  
+  @media screen and (max-width: 990px) {
+    header {
+      background-position: center;
+    }
+  }
+
