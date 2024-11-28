@@ -64,16 +64,16 @@ function Register() {
         setOpen(true);
       }
     } catch (error) {
-        setMessage("Errore nella connessione. Riprova.");
-        setSeverity("error");
-        setOpen(true);
+      setMessage("Errore nella connessione. Riprova.");
+      setSeverity("error");
+      setOpen(true);
     }
   };
 
   return (
     <>
-    <header>
-      {/* <div className="container">
+      <header>
+        {/* <div className="container">
       <div className="row">
         <motion.div
           className="col-md-6 d-flex flex-column justify-content-start align-items-center align-items-sm-start"
@@ -89,114 +89,118 @@ function Register() {
       </div>
     </div> */}
 
-      <Container
-        className="d-flex justify-content-center align-items-center min-vh-100"
-        style={{
-          backgroundImage: "url('path/to/your/image.jpg')",
-          backgroundSize: "cover",
-        }}
-      >
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="login-card p-5 rounded shadow-lg w-100 w-md-50 text-light"
+        <Container
+          className="d-flex justify-content-center align-items-center min-vh-100"
+          style={{
+            backgroundImage: "url('path/to/your/image.jpg')",
+            backgroundSize: "cover",
+          }}
         >
-          <h1 className="login-title text-center mb-3">Register</h1>
-          <p className="login-description text-center mb-4">
-            Please enter your details
-          </p>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="login-card p-5 rounded shadow-lg w-100 w-md-50 text-light"
+          >
+            <h1 className="login-title text-center mb-3">Register</h1>
+            <p className="login-description text-center mb-4">
+              Please enter your details
+            </p>
 
-          {/* Form di registrazione */}
-          <Form>
-            {/* Campo per Username */}
-            <Form.Group controlId="username" className="mb-3">
-              <Form.Label>Username</Form.Label>
-              <div className="input-with-icon position-relative">
-                <Form.Control
-                  type="text"
-                  ref={usernameRef}
-                  placeholder="Enter your username"
-                  className="ps-5"
-                />
-              </div>
-            </Form.Group>
+            {/* Form di registrazione */}
+            <Form>
+              {/* Campo per Username */}
+              <Form.Group controlId="username" className="mb-3">
+                <Form.Label>Username</Form.Label>
+                <div className="input-with-icon position-relative">
+                  <Form.Control
+                    type="text"
+                    ref={usernameRef}
+                    placeholder="Enter your username"
+                    className="ps-5"
+                  />
+                </div>
+              </Form.Group>
 
-            {/* Campo per Name */}
-            <Form.Group controlId="name" className="mb-3">
-              <Form.Label>Nome</Form.Label>
-              <div className="input-with-icon position-relative">
-                <Form.Control
-                  type="text"
-                  ref={nomeRef}
-                  placeholder="Enter your name"
-                  className="ps-5"
-                />
-              </div>
-            </Form.Group>
+              {/* Campo per Name */}
+              <Form.Group controlId="name" className="mb-3">
+                <Form.Label>Nome</Form.Label>
+                <div className="input-with-icon position-relative">
+                  <Form.Control
+                    type="text"
+                    ref={nomeRef}
+                    placeholder="Enter your name"
+                    className="ps-5"
+                  />
+                </div>
+              </Form.Group>
 
-            {/* Campo per Surname */}
-            <Form.Group controlId="surname" className="mb-3">
-              <Form.Label>Cognome</Form.Label>
-              <div className="input-with-icon position-relative">
-                <Form.Control
-                  type="text"
-                  ref={cognomeRef}
-                  placeholder="Enter your surname"
-                  className="ps-5"
-                />
-              </div>
-            </Form.Group>
+              {/* Campo per Surname */}
+              <Form.Group controlId="surname" className="mb-3">
+                <Form.Label>Cognome</Form.Label>
+                <div className="input-with-icon position-relative">
+                  <Form.Control
+                    type="text"
+                    ref={cognomeRef}
+                    placeholder="Enter your surname"
+                    className="ps-5"
+                  />
+                </div>
+              </Form.Group>
 
-            {/* Campo per Email */}
-            <Form.Group controlId="email" className="mb-3">
-              <Form.Label>Email</Form.Label>
-              <div className="input-with-icon position-relative">
-                <Form.Control
-                  type="email"
-                  ref={emailRef}
-                  placeholder="Enter your email"
-                  className="ps-5"
-                />
-              </div>
-            </Form.Group>
+              {/* Campo per Email */}
+              <Form.Group controlId="email" className="mb-3">
+                <Form.Label>Email</Form.Label>
+                <div className="input-with-icon position-relative">
+                  <Form.Control
+                    type="email"
+                    ref={emailRef}
+                    placeholder="Enter your email"
+                    className="ps-5"
+                  />
+                </div>
+              </Form.Group>
 
-            {/* Campo per Password */}
-            <Form.Group controlId="password" className="mb-3">
-              <Form.Label>Password</Form.Label>
-              <div className="input-with-icon position-relative">
-                <Form.Control
-                  type="password"
-                  ref={passwordRef}
-                  placeholder="Enter your password"
-                  className="ps-5"
-                />
-              </div>
-            </Form.Group>
+              {/* Campo per Password */}
+              <Form.Group controlId="password" className="mb-3">
+                <Form.Label>Password</Form.Label>
+                <div className="input-with-icon position-relative">
+                  <Form.Control
+                    type="password"
+                    ref={passwordRef}
+                    placeholder="Enter your password"
+                    className="ps-5"
+                  />
+                </div>
+              </Form.Group>
 
-            {/* Pulsante di registrazione */}
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="w-100 login-style" onClick={handleRegister}>
-                Register
-              </Button>
-            </motion.div>
-          </Form>
-
-          <div className="text-center mt-4">
-            <span className="text-light">
-              Already have an account?{" "}
-              <span
-                className="text-purple cursor-pointer"
-                onClick={() => navigate("/login")}
+              {/* Pulsante di registrazione */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Log in
+                <Button className="w-100 login-style" onClick={handleRegister}>
+                  Register
+                </Button>
+              </motion.div>
+            </Form>
+
+            <div className="text-center mt-4">
+              <span className="text-light">
+                Hai giá un account?
+                <div
+                  className="text-purple ms-2 fw-bold"
+                  style={{ cursor: "pointer", display: "inline-block" }} // Cambiato da span a div
+                  onClick={() => navigate("/login")}
+                >
+                  Log In
+                </div>
               </span>
-            </span>
-          </div>
-        </motion.div>
-      </Container>
-    </header>
-    <Snackbar
+            </div>
+          </motion.div>
+        </Container>
+      </header>
+      <Snackbar
         open={open}
         autoHideDuration={6000}
         onClose={() => setOpen(false)}

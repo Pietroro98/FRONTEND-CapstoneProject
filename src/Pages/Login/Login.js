@@ -101,7 +101,7 @@ function Login() {
         className="login-card p-5 rounded shadow-lg w-100 w-md-50 text-light"
       >
         <h1 className="login-title text-center mb-3">Login</h1>
-        <p className="login-description text-center mb-4">Please enter your email and password</p>
+        <p className="login-description text-center mb-4">Iserisci la tua email e password</p>
 
         <Form>
           <Form.Group controlId="email" className="mb-3">
@@ -112,7 +112,7 @@ function Login() {
                 type="email"
                 ref={emailRef}
                 placeholder="Enter your email"
-                className="ps-5" // Aggiungiamo padding per l'icona
+                className="ps-5" 
               />
             </div>
           </Form.Group>
@@ -143,12 +143,13 @@ function Login() {
         <div className="text-center mt-4">
           <span className="text-light">
             Non hai un account?
-            <span
-              className="text-purple cursor-pointer"
-              onClick={() => navigate("/register")}
-            >
-              Registrati
-            </span>
+            <div
+                  className="text-purple ms-2 fw-bold"
+                  style={{ cursor: "pointer", display: "inline-block" }} // Cambiato da span a div
+                  onClick={() => navigate("/register")}
+                >
+                  Registrati
+                </div>
           </span>
         </div>
       </motion.div>
