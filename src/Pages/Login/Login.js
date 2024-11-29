@@ -152,6 +152,18 @@ function Login() {
                 </div>
           </span>
         </div>
+        <div className="text-center">
+          
+            <span
+                  className="text-light ms-2 fw-bold mt-3"
+                  style={{ cursor: "pointer", display: "inline-block" }} // Cambiato da span a div
+                  onClick={() => navigate("/")}
+                >
+                  Go To Home
+                </span>
+          
+        </div>
+        
       </motion.div>
     </Container>
     </header>
