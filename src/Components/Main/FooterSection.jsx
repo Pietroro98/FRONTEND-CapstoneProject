@@ -4,7 +4,7 @@ import "./FooterSection.css"; import Container from "react-bootstrap/Container";
 
 function FooterSection() {
   return (
-    <div className="footer-section py-5 position-relative text-light">
+    <div className="footer-section py-5 position-relative text-light" id="contatti">
         <motion.div
         className="bg-shape position-absolute"
         initial={{ opacity: 0, x: -300 }}
