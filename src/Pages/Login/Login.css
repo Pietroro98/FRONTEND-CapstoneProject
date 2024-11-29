@@ -27,4 +27,12 @@ header {
     }
   }
 
+  @media screen and (max-width: 530px) {
+    .hero-subtitle {
+      display: none; /* Nasconde l'elemento h2 */
+    }
+    .hero-title {
+      display: none; /* Nasconde l'elemento h1 */
+    }
+  }
   

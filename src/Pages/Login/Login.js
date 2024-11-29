@@ -80,7 +80,6 @@ function Login() {
           >
             <h2 className="hero-subtitle text-light text-center text-sm-start text-uppercase">Start testing yourself now!</h2>
             <h1 className="hero-title text-light text-center text-sm-start fw-bold text-uppercase">
-                {/* Cambiato il testo qui */}
                 Join <span className="text-purple"> & </span> <br/>Test <span className="text-purple"><br/> Your Body </span>
             </h1>
           </motion.div>

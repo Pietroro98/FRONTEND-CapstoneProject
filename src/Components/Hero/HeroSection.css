@@ -8,11 +8,10 @@ header {
   font-size: 5rem;
 }
 
-.get-started:hover{
-  background-color: var(--primary-color)!important;
-  border-color: var(--primary-color)!important ;
-  color: white!important;
-
+.get-started:hover {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important ;
+  color: white !important;
 }
 .hero-subtitle {
   font-size: 15px;
@@ -45,3 +44,13 @@ header {
   }
 }
 
+@media screen and (max-width: 530px) {
+  .hero-subtitle {
+    font-size: 1rem;
+    display: block !important;
+  }
+  .hero-title {
+    font-size: 4rem ;
+    display: block !important;
+  }
+}
