@@ -70,7 +70,7 @@ function Login() {
   return (
     <>
      {/* Nuovo contenuto posizionato in alto a sinistra */}
-     <div className="container position-absolute top-0 start-0 p-3 z-index-2">
+     <div className="container-title position-absolute top-0 start-0 p-3 z-index-2">
         <div className="row">
           <motion.div
             className="col-md-6 d-flex flex-column justify-content-start align-items-center align-items-sm-start"

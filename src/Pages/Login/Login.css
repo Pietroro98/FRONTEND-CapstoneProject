@@ -28,11 +28,11 @@ header {
   }
 
   @media screen and (max-width: 530px) {
-    .hero-subtitle {
-      display: none; /* Nasconde l'elemento h2 */
+    .container-title {
+      display: none !important; 
     }
-    .hero-title {
-      display: none; /* Nasconde l'elemento h1 */
+    .hero-title-title {
+      display: none !important;
     }
   }
   
