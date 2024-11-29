@@ -1,8 +1,78 @@
-import { Container, Box, Typography, TextField, Button, } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@mui/material';
 
 function SearchExercise() {
+  const [exercises, setExercises] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedExercise, setSelectedExercise] = useState(null); // Esercizio selezionato per il pop-up
+  const [error, setError] = useState(false);
+
+  // Funzione asincrona per effettuare la fetch
+  const fetchExercises = async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setError("Non sei autenticato. Effettua il login.");
+        return;
+      }
+
+      const response = await fetch("http://localhost:3001/exercise", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setExercises(data.content);
+      } else {
+        setError("Errore durante il recupero degli esercizi.");
+      }
+    } catch (error) {
+      console.error("Errore nella connessione:", error);
+      setError("Errore di rete. Riprova più tardi.");
+    }
+  };
+
+  // Effettua la fetch quando il componente viene montato
+  useEffect(() => {
+    fetchExercises();
+  }, []);
+
+  // Filtra gli esercizi in base al nome
+  const filteredExercises = exercises.filter((exercise) =>
+    exercise.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Funzione per aprire il pop-up
+  const handleOpenDialog = (exercise) => {
+    setSelectedExercise(exercise);
+  };
+
+  // Funzione per chiudere il pop-up
+  const handleCloseDialog = () => {
+    setSelectedExercise(null);
+  };
+
   return (
     <Container sx={{ mt: '100px' }}>
+      {/* Sezione di ricerca */}
       <Box sx={{ textAlign: 'center', my: 4 }}>
         <Typography
           variant="h3"
@@ -29,29 +99,82 @@ function SearchExercise() {
         }}
       >
         <TextField
-          label="Inserisci il nome dell'esercizio che vuoi cercare !"
+          label="Inserisci il nome dell'esercizio che vuoi cercare!"
           variant="outlined"
           fullWidth
-          sx={{
-            maxWidth: 600,
-          }}
+          sx={{ maxWidth: 600 }}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: '#5e2e8a',
-            color: 'white',
-            '&:hover': {
-              backgroundColor: 'purple',
-            },
-            padding: '10px 25px',
-            borderRadius: 15,
-            fontSize: '14px',
-          }}
-        >
-          Cerca
-        </Button>
       </Box>
+
+      {/* Mostra errori */}
+      {error && (
+        <Typography color="error" sx={{ textAlign: 'center', mt: 4 }}>
+          {error}
+        </Typography>
+      )}
+
+      {/* Sezione di visualizzazione */}
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+          gap: 4,
+          mt: 4,
+        }}
+      >
+        {filteredExercises.map((exercise) => (
+          <Card key={exercise.id} sx={{ maxWidth: 345, mx: 'auto' }}>
+            <CardMedia
+              component="img"
+              height="300"
+              image={exercise.avatar}
+              alt={exercise.name}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {exercise.name}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button
+                size="small"
+                color="primary"
+                onClick={() => handleOpenDialog(exercise)}
+              >
+                Dettagli
+              </Button>
+            </CardActions>
+          </Card>
+        ))}
+      </Box>
+
+      {/* Pop-up per i dettagli */}
+      {selectedExercise && (
+        <Dialog open={Boolean(selectedExercise)} onClose={handleCloseDialog}>
+          <DialogTitle>{selectedExercise.name}</DialogTitle>
+          <DialogContent>
+            <Typography>
+              <strong>Attrezzatura:</strong> {selectedExercise.equipment}
+            </Typography>
+            <Typography>
+              <strong>Target:</strong> {selectedExercise.target}
+            </Typography>
+            <Typography>
+              <strong>Muscoli secondari:</strong> {selectedExercise.secondaryMuscles}
+            </Typography>
+            <Typography>
+              <strong>Istruzioni:</strong> {selectedExercise.instructions}
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseDialog} color="primary">
+              Chiudi
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </Container>
   );
 }
