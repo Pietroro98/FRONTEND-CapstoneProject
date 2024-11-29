@@ -4,7 +4,7 @@ import "./FooterSection.css"; import Container from "react-bootstrap/Container";
 
 function FooterSection() {
   return (
-    <div className="footer-section py-5 position-relative text-light">
+    <div className="footer-section py-5 position-relative text-light" id="contatti">
         <motion.div
         className="bg-shape position-absolute"
         initial={{ opacity: 0, x: -300 }}
@@ -22,10 +22,11 @@ function FooterSection() {
                         <p>- Profilo Instagram :<br/> instagram.com</p>
                         <p>- Profilo LinkedIn :<br/> linkein.com</p>
                         <div className="d-flex">
-                            <h5 className="text-capitalize fw-semibold text-nowrap">Write me: </h5>
-                            <a href="./" className="mx-2 text-decoration-none h5"> <br/>pietroro98@gmail.com</a>
+                            <h5 className="text-capitalize fw-semibold text-nowrap">email: </h5>
+                            <a href="./" className="mx-2 text-decoration-none h5">pietroro98@gmail.com 
+                           </a>
                         </div>
-
+                        <a href="#" className="text-decoration-none text-light">torna sopra</a>
                 </div>
             </div>
         </Container>

@@ -53,13 +53,13 @@ function MyNavBar() {
             <Nav.Link href="#" className="text-light text-uppercase">
               Home
             </Nav.Link>
-            <Nav.Link href="#info" className="text-light text-uppercase">
-              Info
+            <Nav.Link href="#about" className="text-light text-uppercase">
+              About
             </Nav.Link>
-            <Nav.Link href="#Servizi" className="text-light text-uppercase">
+            <Nav.Link href="#servizi" className="text-light text-uppercase">
               Servizi
             </Nav.Link>
-            <Nav.Link href="#Contatti" className="text-light text-uppercase">
+            <Nav.Link href="#contatti" className="text-light text-uppercase">
               Contatti
             </Nav.Link>
           </motion.ul>
