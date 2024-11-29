@@ -68,7 +68,7 @@ function Login() {
 
   return (
     <>
-      <div className="container-title position-absolute top-0 start-0 p-3 z-index-2">
+      <div className="container-title-2 position-absolute top-0 start-0 p-3 z-index-2">
         <div className="row">
           <motion.div
             className="col-md-6 d-flex flex-column justify-content-start align-items-center align-items-sm-start"
@@ -76,14 +76,14 @@ function Login() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
           >
-            <h2 className="hero-subtitle text-light text-center text-sm-start text-uppercase">
+            <h2 className="hero-subtitle-2 text-light text-center text-sm-start text-uppercase">
               Start testing yourself now!
             </h2>
-            <h1 className="hero-title text-light text-center text-sm-start fw-bold text-uppercase">
+            <h1 className="hero-title-2 text-light text-center text-sm-start fw-bold text-uppercase">
               Join <span className="text-purple"> & </span> <br />
-              Test{" "}
+              Test
               <span className="text-purple">
-                <br /> Your Body{" "}
+                <br /> Your Body
               </span>
             </h1>
           </motion.div>
@@ -165,7 +165,7 @@ function Login() {
               </span>
               <span>
                 <div
-                  className="text-light ms-0 mt-5 fw-bold"
+                  className="text-light ms-0 mt-3 fw-bold"
                   style={{ cursor: "pointer", display: "inline-block" }}
                   onClick={() => navigate("/")}
                 >

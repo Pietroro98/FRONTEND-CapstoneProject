@@ -4,7 +4,7 @@ header {
   background-position: left;
 }
 
-.hero-title {
+.hero-title-1 {
   font-size: 5rem;
 }
 
@@ -13,7 +13,7 @@ header {
   border-color: var(--primary-color) !important ;
   color: white !important;
 }
-.hero-subtitle {
+.hero-subtitle-1 {
   font-size: 15px;
 }
 
@@ -24,7 +24,7 @@ header {
 }
 
 @media screen and (max-width: 990px) {
-  .hero-title {
+  .hero-title-1 {
     font-size: 4.5rem;
   }
   header {
@@ -33,24 +33,24 @@ header {
 }
 
 @media screen and (max-width: 768px) {
-  .hero-title {
+  .hero-title-1 {
     font-size: 4rem;
   }
 }
 
 @media screen and (max-width: 576px) {
-  .hero-title {
+  .hero-title-1 {
     font-size: 3rem;
   }
 }
 
-@media screen and (max-width: 530px) {
-  .hero-subtitle {
+/* @media screen and (max-width: 530px) {
+  .hero-subtitle-1 {
     font-size: 1rem;
     display: block !important;
   }
-  .hero-title {
+  .hero-title-1 {
     font-size: 4rem ;
     display: block !important;
   }
-}
+} */

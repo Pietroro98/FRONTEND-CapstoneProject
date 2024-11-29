@@ -18,8 +18,8 @@ function HeroSection() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1 }}
           >
-            <h2 className="hero-subtitle text-light text-center text-sm-start text-uppercase">Costruisci il tuo fisico</h2>
-            <h1 className="hero-title text-light text-center text-sm-start fw-bold text-uppercase">
+            <h2 className="hero-subtitle-1 text-light text-center text-sm-start text-uppercase">Costruisci il tuo fisico</h2>
+            <h1 className="hero-title-1 text-light text-center text-sm-start fw-bold text-uppercase">
                 Be <span className="text-purple"> Fit</span> & <span className="text-purple">strong</span>
             </h1>
             <div>
