@@ -144,10 +144,20 @@ function Login() {
             Non hai un account?
             <div
                   className="text-purple ms-2 fw-bold"
-                  style={{ cursor: "pointer", display: "inline-block" }} // Cambiato da span a div
+                  style={{ cursor: "pointer", display: "inline-block" }} 
                   onClick={() => navigate("/register")}
                 >
                   Registrati
+                </div>
+          </span>
+          <span>
+            
+            <div
+                  className="text-light ms-0 mt-5 fw-bold"
+                  style={{ cursor: "pointer", display: "inline-block" }} 
+                  onClick={() => navigate("/")}
+                >
+                  Go To Home
                 </div>
           </span>
         </div>
