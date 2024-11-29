@@ -53,14 +53,14 @@ function Register() {
       if (response.ok) {
         //dispatch(loginU(result));
         setMessage("Registrazione completata con successo!");
-        setSeverity("success"); // Success
-        setOpen(true); // Mostra il popup
+        setSeverity("success"); 
+        setOpen(true); 
         setTimeout(() => {
-          navigate("/login"); // Redirigi alla pagina di login
+          navigate("/login"); 
         }, 2000);
       } else {
         setMessage("Errore nella registrazione. Riprova.");
-        setSeverity("error"); // Error
+        setSeverity("error"); 
         setOpen(true);
       }
     } catch (error) {
@@ -190,7 +190,7 @@ function Register() {
                 Hai giá un account?
                 <div
                   className="text-purple ms-2 fw-bold"
-                  style={{ cursor: "pointer", display: "inline-block" }} // Cambiato da span a div
+                  style={{ cursor: "pointer", display: "inline-block" }}
                   onClick={() => navigate("/login")}
                 >
                   Log In

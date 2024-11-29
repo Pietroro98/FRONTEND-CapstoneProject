@@ -1,9 +1,8 @@
-// redux/userAuthSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     isAuthUser: false, // Stato per gestire l'autenticazione dell'utente
-    userDetails: null, // Puoi memorizzare dettagli dell'utente qui
+    userDetails: null,
 };
 
 const userAuthSlice = createSlice({

@@ -1,9 +1,8 @@
-// redux/authSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     isAuth: false,
-    user: null, // Puoi anche memorizzare informazioni sull'utente qui
+    user: null,
 };
 
 const authSlice = createSlice({
@@ -22,5 +21,5 @@ const authSlice = createSlice({
 });
 
 // Esporta le azioni e il reducer
-export const { loginU, logoutU } = authSlice.actions; // Assicurati di esportare loginU e logoutU
+export const { loginU, logoutU } = authSlice.actions; 
 export default authSlice.reducer; // Esporta il reducer di default

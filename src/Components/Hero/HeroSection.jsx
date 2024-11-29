@@ -22,8 +22,6 @@ function HeroSection() {
             <h1 className="hero-title text-light text-center text-sm-start fw-bold text-uppercase">
                 Be <span className="text-purple"> Fit</span> & <span className="text-purple">strong</span>
             </h1>
-            {/* <p className="text-center text-sm-start text-light">Essere in forma e forti non è solo una questione di apparenza, ma di potere personale. Ogni passo, ogni scelta sana, ogni momento dedicato al tuo benessere ti avvicina alla versione migliore di te stesso.
-            </p> */}
             <div>
                 <button className="get-started btn btn-light btn-lg rounded-5 text-capitalize"
                  onClick={handleGetStarted}>
