@@ -121,12 +121,14 @@ function ExerciseNavbar() {
               textDecoration: 'none',
             }}
           >
+            Ghisa
              <FontAwesomeIcon
             className="me-2"
             icon={faDumbbell}
             size="xl"
             style={{ color: "#763abb" }}
           />
+          Gym
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
