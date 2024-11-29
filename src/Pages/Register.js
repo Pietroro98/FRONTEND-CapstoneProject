@@ -102,9 +102,9 @@ function Register() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="login-card p-5 rounded shadow-lg w-100 w-md-50 text-light"
           >
-            <h1 className="login-title text-center mb-3">Register</h1>
+            <h1 className="login-title text-center mb-3">Registrazione</h1>
             <p className="login-description text-center mb-4">
-              Please enter your details
+              Compila i tuoi campi!
             </p>
 
             {/* Form di registrazione */}
