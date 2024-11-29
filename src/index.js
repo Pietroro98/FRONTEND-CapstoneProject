@@ -6,11 +6,34 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#224072',
+    },
+    secondary: {
+      main: '#333',
+    },
+    tertiary: {
+      main: '#FFFFFF', 
+    },
+    background: {
+      default: '#121212'
+    } 
+   },
+   
+});
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
+     <ThemeProvider theme={darkTheme}>
     <PersistGate loading={null} persistor={persistor}>
     <App />
     </PersistGate>
+    </ThemeProvider>
   </Provider>
 );

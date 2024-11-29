@@ -1,11 +1,17 @@
 import "../App.css";
 import ExerciseNavbar from "../Components/ExerciseComponent/ExerciseNavbar";
-import { useNavigate } from 'react-router-dom';
+import SearchExercise from "../Components/ExerciseComponent/SearchExercise";
+import { useEffect } from "react";
 
 function ExercisePage() {
+  useEffect(() => {
+    document.body.classList.add("bg-black", "text-light");
+  }, []);
+  
   return (
-    <div className="App">
+    <div className="App ">
       <ExerciseNavbar />
+      <SearchExercise />
     </div>
   );
 }

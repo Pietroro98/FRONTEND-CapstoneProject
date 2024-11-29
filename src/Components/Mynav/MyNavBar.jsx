@@ -13,7 +13,7 @@ function MyNavBar() {
     setIsOpen(!isOpen);
   };
   return (
-    <Navbar expand="lg" className="position-absolute w-100 z-2">
+    <Navbar expand="lg" className="position-absolute w-100 z-2 ">
       <Container>
         <motion.a
           className="navbar-brand text-light"
