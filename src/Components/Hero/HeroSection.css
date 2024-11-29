@@ -18,7 +18,7 @@ header {
   font-size: 15px;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (min-width: 1023px) and (max-width: 1600px) {
   header {
     background-position: center;
   }
