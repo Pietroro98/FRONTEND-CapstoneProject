@@ -52,7 +52,7 @@ function Login() {
         setSeverity("success"); 
         setOpen(true); 
         setTimeout(() => {
-          navigate("/"); // Redirigi alla home dopo 2 secondi
+          navigate("/exercise"); // Redirige alla pagina exercise dopo 2 secondi
         }, 2000);
       } else {
         setMessage("Credenziali non valide. Riprova.");
