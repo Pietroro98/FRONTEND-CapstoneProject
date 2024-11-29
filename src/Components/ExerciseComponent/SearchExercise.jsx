@@ -1,14 +1,8 @@
-import React from 'react';
-import { Container, Box, Typography, TextField, Button } from '@mui/material';
+import { Container, Box, Typography, TextField, Button, } from '@mui/material';
 
 function SearchExercise() {
   return (
-    <Container
-      sx={{
-        mt: '100px',
-      }}
-    >
-      {/* Titolo con testo alternato bianco e viola */}
+    <Container sx={{ mt: '100px' }}>
       <Box sx={{ textAlign: 'center', my: 4 }}>
         <Typography
           variant="h3"
@@ -23,8 +17,6 @@ function SearchExercise() {
           Cerca il tuo <span>Esercizio</span>
         </Typography>
       </Box>
-
-      {/* Form di ricerca */}
       <Box
         component="form"
         sx={{
@@ -40,11 +32,9 @@ function SearchExercise() {
           label="Inserisci il nome dell'esercizio che vuoi cercare !"
           variant="outlined"
           fullWidth
-          sx={{ 
-            maxWidth: 600 ,
-            
-            
-        }}
+          sx={{
+            maxWidth: 600,
+          }}
         />
         <Button
           variant="contained"
@@ -54,8 +44,8 @@ function SearchExercise() {
             '&:hover': {
               backgroundColor: 'purple',
             },
-            padding: '10px 25px', 
-            borderRadius: 15, 
+            padding: '10px 25px',
+            borderRadius: 15,
             fontSize: '14px',
           }}
         >
