@@ -14,7 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
-import { BoltOutlined } from '@mui/icons-material';
+
 
 const pages = ['Esercizi', 'Scheda Allenamento', 'Calcolatore'];
 const settings = ['BackOffice', 'Account', 'Login', 'Logout'];
@@ -23,6 +23,9 @@ function ExerciseNavbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
+
+  
+  const avatarURL = localStorage.getItem('avatarURL') || "/path/to/default/avatar.jpg"; //non funziona
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -171,7 +174,7 @@ function ExerciseNavbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Avatar src={avatarURL} />  {/* non funziona */}
               </IconButton>
             </Tooltip>
             <Menu

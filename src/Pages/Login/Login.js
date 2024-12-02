@@ -43,7 +43,7 @@ function Login() {
       const result = await response.json();
 
       if (response.ok) {
-        const avatarURL = result.avatarURL;
+        const avatarURL = result.avatarURL; // non funziona
         localStorage.setItem('avatarURL', avatarURL);
         
         localStorage.setItem("authToken", result.accessToken);
