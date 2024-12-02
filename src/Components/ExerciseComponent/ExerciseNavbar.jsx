@@ -14,9 +14,10 @@ import MenuItem from '@mui/material/MenuItem';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
+import { BoltOutlined } from '@mui/icons-material';
 
 const pages = ['Esercizi', 'Scheda Allenamento', 'Calcolatore'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = ['BackOffice', 'Account', 'Login', 'Logout'];
 
 function ExerciseNavbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -116,7 +117,11 @@ function ExerciseNavbar() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={() => { handleNavigate(page); handleCloseNavMenu(); }}>
+                <MenuItem key={page} onClick={() => { handleNavigate(page); handleCloseNavMenu(); }}
+                sx={{
+                  '&:hover': { color: "#763abb", fontWeight: "bold", backgroundColor: 'transparent'},
+                }}
+                >
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
@@ -153,7 +158,11 @@ function ExerciseNavbar() {
               <Button
                 key={page}
                 onClick={() => handleNavigate(page)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block', '&:hover': { 
+                    color: '#763abb',  
+                    fontWeight: 'bold', 
+                    backgroundColor: 'transparent', 
+                  }, }}
               >
                 {page}
               </Button>
@@ -182,7 +191,16 @@ function ExerciseNavbar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={handleCloseUserMenu}
+                sx={{
+                  '&:hover': { 
+                    color: '#763abb', 
+                    fontWeight: 'bold', 
+                    backgroundColor: 'transparent', 
+                  },
+                }}
+                
+                >
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>
               ))}
