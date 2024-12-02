@@ -18,10 +18,10 @@ import {
 function SearchExercise() {
   const [exercises, setExercises] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedExercise, setSelectedExercise] = useState(null); // Esercizio selezionato per il pop-up
+  const [selectedExercise, setSelectedExercise] = useState(null); 
   const [error, setError] = useState(false);
 
-  // Funzione asincrona per effettuare la fetch
+  
   const fetchExercises = async () => {
     try {
       const token = localStorage.getItem('authToken');
@@ -50,22 +50,18 @@ function SearchExercise() {
     }
   };
 
-  // Effettua la fetch quando il componente viene montato
   useEffect(() => {
     fetchExercises();
   }, []);
 
-  // Filtra gli esercizi in base al nome
   const filteredExercises = exercises.filter((exercise) =>
     exercise.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Funzione per aprire il pop-up
   const handleOpenDialog = (exercise) => {
     setSelectedExercise(exercise);
   };
 
-  // Funzione per chiudere il pop-up
   const handleCloseDialog = () => {
     setSelectedExercise(null);
   };
