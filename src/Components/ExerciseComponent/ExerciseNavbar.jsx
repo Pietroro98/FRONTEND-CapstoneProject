@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from 'react-router-dom';
 
 const pages = ['Esercizi', 'Scheda Allenamento', 'Calcolatore'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -20,6 +21,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function ExerciseNavbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,17 +38,33 @@ function ExerciseNavbar() {
     setAnchorElUser(null);
   };
 
+  
+  const handleNavigate = (page) => {
+    switch (page) {
+      case 'Esercizi':
+        navigate("/esercizi");
+        break;
+      case 'Scheda Allenamento':
+        navigate("/scheda-allenamento");
+        break;
+      case 'Calcolatore':
+        navigate("/calcolatore");
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <AppBar position="fixed"
-    sx={{
-      backgroundColor: "#000000",
-      borderRadius: "20px",
-      margin: "10px",
-      width: "calc(100% - 20px)",
-    }}>
+      sx={{
+        backgroundColor: "#000000",
+        borderRadius: "20px",
+        margin: "10px",
+        width: "calc(100% - 20px)",
+      }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-         
           <Typography
             variant="h6"
             noWrap
@@ -62,12 +80,12 @@ function ExerciseNavbar() {
               textDecoration: 'none',
             }}
           >
-             <FontAwesomeIcon
-            className="me-2"
-            icon={faDumbbell}
-            size="xl"
-            style={{ color: "#763abb" }}
-          />
+            <FontAwesomeIcon
+              className="me-2"
+              icon={faDumbbell}
+              size="xl"
+              style={{ color: "#763abb" }}
+            />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -98,13 +116,13 @@ function ExerciseNavbar() {
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => { handleNavigate(page); handleCloseNavMenu(); }}>
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          
+
           <Typography
             variant="h5"
             noWrap
@@ -122,19 +140,19 @@ function ExerciseNavbar() {
             }}
           >
             Ghisa
-             <FontAwesomeIcon
-            className="me-2"
-            icon={faDumbbell}
-            size="xl"
-            style={{ color: "#763abb" }}
-          />
-          Gym
+            <FontAwesomeIcon
+              className="me-2"
+              icon={faDumbbell}
+              size="xl"
+              style={{ color: "#763abb" }}
+            />
+            Gym
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleNavigate(page)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}

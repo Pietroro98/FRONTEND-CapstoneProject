@@ -4,17 +4,20 @@ import Login from "./Pages/Login/Login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./Pages/Register";
 import ExercisePage from "./Pages/ExercisePage";
+import WorkoutPlanPage from "./Pages/WorkoutPlanPage";
+
 
 function App() {
   return (
     <Router>
     <div className="App">
-    <Routes>  {/* Usa <Routes> per definire le rotte */}
+    <Routes>  
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} /> 
           <Route path="/register" element={<Register />} />
-          <Route path="/exercise" element={<ExercisePage />} />
-
+          <Route path="/esercizi" element={<ExercisePage />} />
+          <Route path="/scheda-allenamento" element={<WorkoutPlanPage />} />
+         
         </Routes>
      
 
