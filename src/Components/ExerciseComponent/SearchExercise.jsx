@@ -157,12 +157,13 @@ function SearchExercise() {
         }}
       >
         {filteredExercises.map((exercise) => (
-          <Card key={exercise.id} sx={{ maxWidth: 345, mx: 'auto' }}>
+          <Card key={exercise.id} sx={{ maxWidth: 345, mx: 'auto', color: "" }}>
             <CardMedia
               component="img"
               height="300"
               image={exercise.avatar}
               alt={exercise.name}
+              
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
@@ -174,6 +175,7 @@ function SearchExercise() {
                 size="small"
                 color="primary"
                 onClick={() => handleOpenDialog(exercise)}
+                sx={{ color: "white"}}
               >
                 Dettagli
               </Button>
@@ -188,10 +190,10 @@ function SearchExercise() {
           <DialogTitle>{selectedExercise.name}</DialogTitle>
           <DialogContent>
             <Typography>
-              <strong>Attrezzatura:</strong> {selectedExercise.equipment}
+              <strong >Attrezzatura:</strong> {selectedExercise.equipment}
             </Typography>
             <Typography>
-              <strong>Target:</strong> {selectedExercise.target}
+              <strong >Target:</strong> {selectedExercise.target}
             </Typography>
             <Typography>
               <strong>Muscoli secondari:</strong> {selectedExercise.secondaryMuscles}
@@ -201,7 +203,7 @@ function SearchExercise() {
             </Typography>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseDialog} color="primary">
+            <Button onClick={handleCloseDialog} sx={{ color: "red"}}>
               Chiudi
             </Button>
           </DialogActions>
