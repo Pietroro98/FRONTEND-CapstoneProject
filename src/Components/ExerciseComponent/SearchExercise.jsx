@@ -22,7 +22,6 @@ function SearchExercise() {
   const [selectedExercise, setSelectedExercise] = useState(null); 
   const [error, setError] = useState(false);
 
-  // Funzione per recuperare gli esercizi in base al nome e alla parte del corpo
   const fetchExercises = async () => {
     try {
       const token = localStorage.getItem('authToken');
@@ -31,10 +30,9 @@ function SearchExercise() {
         return;
       }
 
-      // URL per la ricerca dell'esercizio in base alla parte del corpo e nome
       const url = bodyPart
         ? `http://localhost:3001/exercise/body-Part?bodyPartName=${bodyPart}&page=0&size=100`
-        : `http://localhost:3001/exercise?page=0&size=100`;  // Se la parte del corpo non è specificata, carica tutti gli esercizi
+        : `http://localhost:3001/exercise?page=0&size=100`;
 
       const response = await fetch(url, {
         method: "GET",
@@ -56,17 +54,17 @@ function SearchExercise() {
     }
   };
 
-  // Filtro gli esercizi in base al nome
+ 
   const filteredExercises = exercises.filter((exercise) =>
     exercise.name.toLowerCase().includes(searchQuery.toLowerCase()) 
   );
 
-  // Apre il dialogo dei dettagli dell'esercizio
+ 
   const handleOpenDialog = (exercise) => {
     setSelectedExercise(exercise);
   };
 
-  // Chiude il dialogo dei dettagli
+ 
   const handleCloseDialog = () => {
     setSelectedExercise(null);
   };
@@ -107,7 +105,7 @@ function SearchExercise() {
           fullWidth
           sx={{ maxWidth: 600 }}
           value={bodyPart}
-          onChange={(e) => setBodyPart(e.target.value)} // Aggiorna la parte del corpo
+          onChange={(e) => setBodyPart(e.target.value)} 
         />
       </Box>
 
@@ -129,7 +127,7 @@ function SearchExercise() {
           fullWidth
           sx={{ maxWidth: 600 }}
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} // Aggiorna il nome dell'esercizio
+          onChange={(e) => setSearchQuery(e.target.value)}
         />
       </Box>
 
@@ -138,13 +136,11 @@ function SearchExercise() {
         <Button
           variant="contained"
           color="primary"
-          onClick={fetchExercises} // Esegui la ricerca quando premuto
+          onClick={fetchExercises} 
         >
           Cerca
         </Button>
       </Box>
-
-      {/* Mostra errori */}
       {error && (
         <Typography color="error" sx={{ textAlign: 'center', mt: 4 }}>
           {error}
