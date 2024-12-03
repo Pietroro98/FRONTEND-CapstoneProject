@@ -17,11 +17,12 @@ import {
 
 function SearchExercise() {
   const [exercises, setExercises] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');  // Per nome esercizio
+  const [bodyPart, setBodyPart] = useState('');        // Per parte del corpo
   const [selectedExercise, setSelectedExercise] = useState(null); 
   const [error, setError] = useState(false);
 
-  
+  // Funzione per recuperare gli esercizi in base al nome e alla parte del corpo
   const fetchExercises = async () => {
     try {
       const token = localStorage.getItem('authToken');
@@ -30,7 +31,12 @@ function SearchExercise() {
         return;
       }
 
-      const response = await fetch("http://localhost:3001/exercise?page=0&size=100", {
+      // URL per la ricerca dell'esercizio in base alla parte del corpo e nome
+      const url = bodyPart
+        ? `http://localhost:3001/exercise/body-Part?bodyPartName=${bodyPart}&page=0&size=100`
+        : `http://localhost:3001/exercise?page=0&size=100`;  // Se la parte del corpo non è specificata, carica tutti gli esercizi
+
+      const response = await fetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +46,7 @@ function SearchExercise() {
 
       if (response.ok) {
         const data = await response.json();
-        setExercises(data.content);
+        setExercises(data.content || []);
       } else {
         setError("Errore durante il recupero degli esercizi.");
       }
@@ -50,18 +56,17 @@ function SearchExercise() {
     }
   };
 
-  useEffect(() => {
-    fetchExercises();
-  }, []);
-
+  // Filtro gli esercizi in base al nome
   const filteredExercises = exercises.filter((exercise) =>
-    exercise.name.toLowerCase().includes(searchQuery.toLowerCase())
+    exercise.name.toLowerCase().includes(searchQuery.toLowerCase()) 
   );
 
+  // Apre il dialogo dei dettagli dell'esercizio
   const handleOpenDialog = (exercise) => {
     setSelectedExercise(exercise);
   };
 
+  // Chiude il dialogo dei dettagli
   const handleCloseDialog = () => {
     setSelectedExercise(null);
   };
@@ -83,6 +88,30 @@ function SearchExercise() {
           Cerca il tuo <span>Esercizio</span>
         </Typography>
       </Box>
+
+      {/* Sezione di input per parte del corpo */}
+      <Box
+        component="form"
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 2,
+          flexDirection: 'column',
+          mt: 4,
+        }}
+      >
+        <TextField
+          label="Inserisci la parte del corpo (es. Spalle)"
+          variant="outlined"
+          fullWidth
+          sx={{ maxWidth: 600 }}
+          value={bodyPart}
+          onChange={(e) => setBodyPart(e.target.value)} // Aggiorna la parte del corpo
+        />
+      </Box>
+
+      {/* Sezione di input per il nome dell'esercizio */}
       <Box
         component="form"
         sx={{
@@ -100,8 +129,19 @@ function SearchExercise() {
           fullWidth
           sx={{ maxWidth: 600 }}
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => setSearchQuery(e.target.value)} // Aggiorna il nome dell'esercizio
         />
+      </Box>
+
+      {/* Pulsante per avviare la ricerca */}
+      <Box sx={{ textAlign: 'center', mt: 4 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={fetchExercises} // Esegui la ricerca quando premuto
+        >
+          Cerca
+        </Button>
       </Box>
 
       {/* Mostra errori */}
@@ -111,7 +151,7 @@ function SearchExercise() {
         </Typography>
       )}
 
-      {/* Sezione di visualizzazione */}
+      {/* Sezione di visualizzazione degli esercizi */}
       <Box
         sx={{
           display: 'grid',

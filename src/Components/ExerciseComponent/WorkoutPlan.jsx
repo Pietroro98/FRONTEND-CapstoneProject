@@ -16,14 +16,12 @@ export default function FullFeaturedCrudGrid() {
 
   useEffect(() => {
     if (userId) {
-      // Esegui la richiesta per ottenere la scheda allenamento dell'utente
       fetch(`/workout_plans/user/${userId}`)
         .then((response) => response.json())
         .then((data) => {
-          const workoutPlan = data.content[0]; // Supponiamo che tu ottenga una lista di piani di allenamento
+          const workoutPlan = data.content[0];
           const workoutPlanId = workoutPlan.id;
 
-          // Esegui una seconda richiesta per ottenere gli esercizi associati alla scheda allenamento
           fetch(`/exercise_workout?workoutPlanId=${workoutPlanId}`)
             .then((response) => response.json())
             .then((exerciseData) => {
@@ -56,16 +54,12 @@ export default function FullFeaturedCrudGrid() {
   const handleSaveClick = (id) => () => {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
 
-    // Qui aggiungi la logica per inviare i dati modificati al server
     const updatedRow = rows.find((row) => row.id === id);
-    console.log('Dati salvati:', updatedRow); // Puoi fare una chiamata per salvare i dati nel server
+    console.log('Dati salvati:', updatedRow);
   };
 
   const handleDeleteClick = (id) => () => {
     setRows(rows.filter((row) => row.id !== id));
-
-    // Aggiungi qui la logica per eliminare i dati nel server
-    console.log('Dati eliminati:', id); // Aggiungi la chiamata API per eliminare l'esercizio
   };
 
   const handleCancelClick = (id) => () => {
