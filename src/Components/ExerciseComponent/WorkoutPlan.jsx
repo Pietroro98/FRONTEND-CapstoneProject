@@ -1,160 +1,118 @@
+import './WorkoutPlan.css';
+import React, { useState } from "react";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TextField, Button } from '@mui/material';
 
+const WorkoutPlan = () => {
+  const [nomeScheda, setNomeScheda] = useState('');
+  const [dataCreazione, setDataCreazione] = useState('');
+  const [dataAllenamento, setDataAllenamento] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); // Stato per gestire eventuali errori
 
-import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import CancelIcon from '@mui/icons-material/Close';
-import { GridRowModes, DataGrid, GridToolbarContainer, GridActionsCellItem, GridRowEditStopReasons } from '@mui/x-data-grid';
-import { useSelector } from 'react-redux';
+  const handleCreateWorkoutPlan = async () => {
+    const workoutData = {
+      nomeScheda,
+      dataCreazione,
+      dataAllenamento,
+    };
 
-export default function FullFeaturedCrudGrid() {
-  const [rows, setRows] = useState([]);
-  const [rowModesModel, setRowModesModel] = useState({});
-  const userId = useSelector((state) => state.auth.user?.id);
+    // Recupera il token dal localStorage
+    const token = localStorage.getItem("authToken");
 
-  useEffect(() => {
-    if (userId) {
-      fetch(`/workout_plans/user/${userId}`)
-        .then((response) => response.json())
-        .then((data) => {
-          const workoutPlan = data.content[0];
-          const workoutPlanId = workoutPlan.id;
-
-          fetch(`/exercise_workout?workoutPlanId=${workoutPlanId}`)
-            .then((response) => response.json())
-            .then((exerciseData) => {
-              const formattedRows = exerciseData.content.map((exercise) => ({
-                id: exercise.id,
-                nomeScheda: workoutPlan.nome_scheda,
-                nomeEsercizio: exercise.nome,
-                serie: exercise.serie,
-                ripetizioni: exercise.ripetizioni,
-                peso: exercise.pesoUsato,
-              }));
-              setRows(formattedRows);
-            })
-            .catch((err) => console.error('Errore nel caricamento degli esercizi:', err));
-        })
-        .catch((err) => console.error('Errore nel caricamento della scheda allenamento:', err));
+    if (!token) {
+      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
+      return;
     }
-  }, [userId]);
 
-  const handleRowEditStop = (params, event) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
+    try {
+      // Chiamata POST al backend per salvare la scheda di allenamento
+      const response = await fetch('http://localhost:3001/workout_plans', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json', // Assicura che i dati vengano inviati come JSON
+          'Authorization': `Bearer ${token}`, // Aggiungi il token nell'header
+        },
+        body: JSON.stringify(workoutData), // Converte il corpo della richiesta in JSON
+      });
+
+      if (response.ok) {
+        const data = await response.json(); // Risposta del server in formato JSON
+        console.log("Scheda di allenamento creata con successo:", data);
+        // Reset dei campi
+        setNomeScheda('');
+        setDataCreazione('');
+        setDataAllenamento('');
+        setErrorMessage('');
+      } else {
+        // Gestisci gli errori di risposta
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || "Errore nella creazione della scheda. Riprova.");
+      }
+    } catch (error) {
+      console.error("Errore nella creazione della scheda:", error);
+      setErrorMessage("Errore nella creazione della scheda. Riprova.");
     }
-  };
-
-  const handleEditClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
-
-  const handleSaveClick = (id) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-
-    const updatedRow = rows.find((row) => row.id === id);
-    console.log('Dati salvati:', updatedRow);
-  };
-
-  const handleDeleteClick = (id) => () => {
-    setRows(rows.filter((row) => row.id !== id));
-  };
-
-  const handleCancelClick = (id) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
-    });
-
-    const editedRow = rows.find((row) => row.id === id);
-    if (editedRow?.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
-    }
-  };
-
-  const processRowUpdate = (newRow) => {
-    const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    return updatedRow;
-  };
-
-  const handleRowModesModelChange = (newRowModesModel) => {
-    setRowModesModel(newRowModesModel);
-  };
-
-  const columns = [
-    { field: 'nomeScheda', headerName: 'Nome Scheda', width: 180 },
-    { field: 'nomeEsercizio', headerName: 'Nome Esercizio', width: 180, editable: true },
-    { field: 'serie', headerName: 'Serie', width: 120, type: 'number', editable: true },
-    { field: 'ripetizioni', headerName: 'Ripetizioni', width: 180, type: 'number', editable: true },
-    { field: 'peso', headerName: 'Peso', width: 180, type: 'number', editable: true },
-    {
-      field: 'actions',
-      type: 'actions',
-      headerName: 'Actions',
-      width: 100,
-      cellClassName: 'actions',
-      getActions: ({ id }) => {
-        const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
-        if (isInEditMode) {
-          return [
-            <GridActionsCellItem icon={<SaveIcon />} label="Save" onClick={handleSaveClick(id)} />,
-            <GridActionsCellItem icon={<CancelIcon />} label="Cancel" onClick={handleCancelClick(id)} />,
-          ];
-        }
-
-        return [
-          <GridActionsCellItem icon={<EditIcon />} label="Edit" onClick={handleEditClick(id)} />,
-          <GridActionsCellItem icon={<DeleteIcon />} label="Delete" onClick={handleDeleteClick(id)} />,
-        ];
-      },
-    },
-  ];
-
-  return (
-    <Box sx={{ height: 500, width: '100%', marginTop: 20 }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        slots={{ toolbar: EditToolbar }}
-        slotProps={{
-          toolbar: { setRows, setRowModesModel },
-        }}
-      />
-    </Box>
-  );
-}
-
-function EditToolbar(props) {
-  const { setRows, setRowModesModel } = props;
-
-  const handleClick = () => {
-    const id = Math.floor(Math.random() * 10000); // Genera un ID casuale per un nuovo esercizio
-    setRows((oldRows) => [
-      ...oldRows,
-      { id, nomeScheda: '', nomeEsercizio: '', serie: '', ripetizioni: '', peso: '', isNew: true },
-    ]);
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: 'nomeEsercizio' },
-    }));
   };
 
   return (
-    <GridToolbarContainer>
-      <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Aggiungi esercizio
-      </Button>
-    </GridToolbarContainer>
+    <div className="workout-container">
+      <h2 className="workout-title">Crea la tua Scheda di Allenamento</h2>
+
+      <div className="form-container">
+        <TextField
+          label="Nome Scheda"
+          variant="outlined"
+          value={nomeScheda}
+          onChange={(e) => setNomeScheda(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Data Creazione"
+          variant="outlined"
+          type="date"
+          value={dataCreazione}
+          onChange={(e) => setDataCreazione(e.target.value)}
+          fullWidth
+          margin="normal"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <TextField
+          label="Data Allenamento"
+          variant="outlined"
+          type="date"
+          value={dataAllenamento}
+          onChange={(e) => setDataAllenamento(e.target.value)}
+          fullWidth
+          margin="normal"
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>} {/* Mostra errore */}
+        <Button variant="contained" color="primary" onClick={handleCreateWorkoutPlan} className="create-button">
+          Crea Scheda
+        </Button>
+      </div>
+
+      <TableContainer component={Paper} className="table-container">
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nome Esercizio</TableCell>
+              <TableCell>Serie</TableCell>
+              <TableCell>Ripetizione</TableCell>
+              <TableCell>Peso Usato</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {/* Nessuna riga, tabella vuota */}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
-}
+};
+
+export default WorkoutPlan;
