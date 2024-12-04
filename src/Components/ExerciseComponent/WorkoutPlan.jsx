@@ -165,6 +165,7 @@ const WorkoutPlan = () => {
           color="primary"
           onClick={handleCreateWorkoutPlan}
           className="create-button"
+          sx={{marginBottom:3}}
         >
           Crea Scheda
         </Button>
