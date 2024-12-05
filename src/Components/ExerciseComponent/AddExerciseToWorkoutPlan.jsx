@@ -69,7 +69,7 @@ const AddExerciseToWorkoutPlan = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/exercise", {
+      const response = await fetch("http://localhost:3001/exercise?page=0&size=100", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
