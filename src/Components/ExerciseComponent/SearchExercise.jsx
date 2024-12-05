@@ -17,8 +17,8 @@ import {
 
 function SearchExercise() {
   const [exercises, setExercises] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');  // Per nome esercizio
-  const [bodyPart, setBodyPart] = useState('');        // Per parte del corpo
+  const [searchQuery, setSearchQuery] = useState('');
+  const [bodyPart, setBodyPart] = useState('');
   const [selectedExercise, setSelectedExercise] = useState(null); 
   const [error, setError] = useState(false);
 

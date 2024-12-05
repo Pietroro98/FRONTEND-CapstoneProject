@@ -1,9 +1,8 @@
-// redux/store.js
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // Usa localStorage per la persistenza
-import authReducer from '../reducers/authSlice'; // Importa il reducer per l'autenticazione generale
-import userAuthReducer from '../reducers/userAuthSlice'; // Importa il reducer per l'autenticazione utente
+import storage from 'redux-persist/lib/storage';
+import authReducer from '../reducers/authSlice';
+import userAuthReducer from '../reducers/userAuthSlice';
 
 // Configurazione per la persistenza
 const persistConfig = {
@@ -13,8 +12,8 @@ const persistConfig = {
 
 // Combina tutti i reducer in un unico rootReducer
 const rootReducer = combineReducers({
-    auth: authReducer,          // Reducer generale
-    userAuth: userAuthReducer,  // Reducer per l'autenticazione utente
+    auth: authReducer,
+    userAuth: userAuthReducer,
 });
 
 // Crea un reducer persistente

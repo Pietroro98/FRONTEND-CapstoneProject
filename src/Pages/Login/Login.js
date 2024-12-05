@@ -23,7 +23,7 @@ function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  // Funzione di login
+  // login
   async function handelLogin() {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
@@ -51,7 +51,7 @@ function Login() {
         localStorage.setItem("authToken", result.accessToken);
         localStorage.setItem("isAuth", true);
         console.log(result.accessToken);
-        dispatch(loginU(result.token)); // Usa il tuo reducer per il login, se necessario
+        dispatch(loginU(result.token));
         setMessage("Login effettuato con successo!");
         setSeverity("success");
         setOpen(true);
@@ -60,7 +60,7 @@ function Login() {
         }, 2000);
       } else {
         setMessage("Credenziali non valide. Riprova.");
-        setSeverity("error"); // Error
+        setSeverity("error");
         setOpen(true);
       }
     } catch (error) {
@@ -73,7 +73,6 @@ function Login() {
 
   return (
     <>
-      {/* Nuovo contenuto posizionato in alto a sinistra */}
       <div className="container position-absolute top-0 start-0 p-3 z-index-2">
         <div className="row">
           <motion.div
@@ -164,7 +163,7 @@ function Login() {
                 Non hai un account?
                 <div
                   className="text-purple ms-2 fw-bold"
-                  style={{ cursor: "pointer", display: "inline-block" }} // Cambiato da span a div
+                  style={{ cursor: "pointer", display: "inline-block" }}
                   onClick={() => navigate("/register")}
                 >
                   Registrati
@@ -174,7 +173,7 @@ function Login() {
             <div className="text-center">
               <span
                 className="text-light ms-2 fw-bold mt-3"
-                style={{ cursor: "pointer", display: "inline-block" }} // Cambiato da span a div
+                style={{ cursor: "pointer", display: "inline-block" }}
                 onClick={() => navigate("/")}
               >
                 Go To Home

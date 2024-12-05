@@ -4,7 +4,7 @@ header {
     background-size: cover;
     background-position: left;
   }
-  /* Card di login */
+  /* Card login */
   .login-card {
     max-width: 400px;
     background: linear-gradient(140deg, #000000, #141414b0);

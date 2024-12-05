@@ -1,41 +1,47 @@
 .workout-container {
-    padding-top: 100px; 
-    text-align: center;
-  }
-  
+  padding-top: 100px;
+  text-align: center;
+}
 
-  .workout-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
- 
-  .form-container {
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);  
-  }
+.workout-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  width: 100%;
+}
 
- 
-  
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
 
-  /* Spaziatura tra i campi del form */
-  .form-container .MuiTextField-root {
-    margin-bottom: 20px;
-  }
-  
- 
-  .create-button {
-    margin-top: 20px;
-  }
-  
-  .table-container {
-    margin-top: 40px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
+.form-container .MuiTextField-root {
+  margin-bottom: 20px;
+}
+
+.table-container {
+  margin-top: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.add-exercise-container {
+  padding-top: 50px;
+  text-align: center;
+}
+
+.add-exercise-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
