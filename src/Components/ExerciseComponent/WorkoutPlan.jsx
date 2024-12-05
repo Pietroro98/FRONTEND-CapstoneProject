@@ -1,4 +1,3 @@
-import "./WorkoutPlan.css";
 import React, { useState, useEffect } from "react";
 import {
   Table,
@@ -10,8 +9,12 @@ import {
   Paper,
   TextField,
   Button,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
 } from "@mui/material";
-import { jwtDecode } from "jwt-decode";
+import "./WorkoutPlan.css";
 
 const WorkoutPlan = () => {
   const [nomeScheda, setNomeScheda] = useState("");
@@ -19,33 +22,59 @@ const WorkoutPlan = () => {
   const [dataAllenamento, setDataAllenamento] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [workoutPlans, setWorkoutPlans] = useState([]);
+  const [userList, setUserList] = useState([]); // Lista utenti
+  const [selectedUserId, setSelectedUserId] = useState(""); // ID utente per la creazione della scheda
+  const [selectedViewUserId, setSelectedViewUserId] = useState(""); // ID utente per visualizzare le sue schede
 
-  const handleCreateWorkoutPlan = async () => {
-    const workoutData = {
-      nomeScheda,
-      dataCreazione,
-      dataAllenamento,
-    };
-
+  // Recupera la lista degli utenti
+  const fetchUsers = async () => {
     const token = localStorage.getItem("authToken");
-
     if (!token) {
-      setErrorMessage(
-        "Token di autenticazione mancante. Assicurati di essere loggato."
-      );
+      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
       return;
     }
 
     try {
-      const decodedToken = jwtDecode(token);
-      console.log("Decoded token:", decodedToken);
-      const userId = decodedToken.sub;
-      if (!userId) {
-        setErrorMessage("ID utente non trovato nel token.");
-        return;
-      }
-      workoutData.userId = userId;
+      const response = await fetch("http://localhost:3001/user/all", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
+      const data = await response.json();
+      if (data && Array.isArray(data)) {
+        setUserList(data);
+      } else {
+        setErrorMessage(data.message || "Errore nel recupero degli utenti. Riprova.");
+      }
+    } catch (error) {
+      console.error("Errore nel recupero degli utenti:", error);
+      setErrorMessage("Errore nel recupero degli utenti. Riprova.");
+    }
+  };
+
+  // Funzione per creare la scheda di allenamento
+  const handleCreateWorkoutPlan = async () => {
+    if (!selectedUserId) {
+      setErrorMessage("Devi selezionare un utente.");
+      return;
+    }
+
+    const workoutData = {
+      nomeScheda,
+      dataCreazione,
+      dataAllenamento,
+      userId: selectedUserId, // ID utente selezionato
+    };
+
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
+      return;
+    }
+
+    try {
       const response = await fetch("http://localhost:3001/workout_plans", {
         method: "POST",
         headers: {
@@ -56,19 +85,16 @@ const WorkoutPlan = () => {
       });
 
       const data = await response.json();
-      console.log("Risposta dal server dopo creazione della scheda:", data);
-
+      console.log("Server response:", data);
       if (response.ok) {
-        fetchWorkoutPlans();
+        fetchWorkoutPlans(selectedUserId); // Recupera le schede dell'utente selezionato
         setNomeScheda("");
         setDataCreazione("");
         setDataAllenamento("");
-        setErrorMessage("");
+        setSelectedUserId(""); // Reset dell'utente selezionato
+        setErrorMessage(""); // Reset messaggio errore
       } else {
-        const errorData = await response.json();
-        setErrorMessage(
-          errorData.message || "Errore nella creazione della scheda. Riprova."
-        );
+        setErrorMessage(data.message || "Errore nella creazione della scheda. Riprova.");
       }
     } catch (error) {
       console.error("Errore nella creazione della scheda:", error);
@@ -76,24 +102,17 @@ const WorkoutPlan = () => {
     }
   };
 
-  //GET Scheda allenamento
-  const fetchWorkoutPlans = async () => {
+  // Funzione per recuperare le schede di allenamento per un utente specifico
+  const fetchWorkoutPlans = async (userId) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      setErrorMessage(
-        "Token di autenticazione mancante. Assicurati di essere loggato."
-      );
+      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
       return;
     }
 
     try {
-      const decodedToken = jwtDecode(token);
-      // console.log(decodedToken) // Ho verificato se Id utente mi veniva dato da userId o con altro nome, effettivamente e con sub
-      const userId = decodedToken.sub; // Otteniamo l'ID dell'utente dal token usando jwtdecode, Id utente si trova in sub
-      // console.log("User ID estratto dal token:", userId);
-
       const response = await fetch(
-        `http://localhost:3001/workout_plans/user/${userId}`,
+        `http://localhost:3001/workout_plans/user/${userId}`, // Endpoint per le schede dell'utente specifico
         {
           method: "GET",
           headers: {
@@ -103,14 +122,12 @@ const WorkoutPlan = () => {
       );
 
       const data = await response.json();
-      // console.log("Schede ricevute dal backend:", data); //Schede che ricevo dal BE
-      
+      console.log("Workout plans response:", data);
+
       if (data.content && Array.isArray(data.content)) {
-        setWorkoutPlans(data.content);
+        setWorkoutPlans(data.content); // Aggiorna lo stato con le schede dell'utente
       } else {
-        setErrorMessage(
-          data.message || "Errore nel recupero delle schede. Riprova."
-        );
+        setErrorMessage(data.message || "Errore nel recupero delle schede. Riprova.");
       }
     } catch (error) {
       console.error("Errore nel recupero delle schede:", error);
@@ -118,8 +135,16 @@ const WorkoutPlan = () => {
     }
   };
 
+  // Funzione per gestire la selezione dell'utente per visualizzare le sue schede
+  const handleSelectViewUser = (e) => {
+    const userId = e.target.value;
+    console.log("User selected for viewing: ", userId); // Verifica l'ID dell'utente selezionato per visualizzare le schede
+    setSelectedViewUserId(userId);
+    fetchWorkoutPlans(userId); // Recupera le schede solo per l'utente selezionato
+  };
+
   useEffect(() => {
-    fetchWorkoutPlans();
+    fetchUsers(); // Recupera la lista degli utenti all'inizio
   }, []);
 
   return (
@@ -127,6 +152,22 @@ const WorkoutPlan = () => {
       <h2 className="workout-title">Crea la tua Scheda di Allenamento</h2>
 
       <div className="form-container">
+        {/* Seleziona l'utente per la creazione della scheda */}
+        <FormControl fullWidth margin="normal">
+          <InputLabel>Seleziona un Utente per Creare la Scheda</InputLabel>
+          <Select
+            value={selectedUserId}
+            onChange={(e) => setSelectedUserId(e.target.value)}
+            label="Seleziona un Utente per Creare la Scheda"
+          >
+            {userList.map((user) => (
+              <MenuItem key={user.id} value={user.id}>
+                {user.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         <TextField
           label="Nome Scheda"
           variant="outlined"
@@ -159,17 +200,37 @@ const WorkoutPlan = () => {
             shrink: true,
           }}
         />
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+
         <Button
           variant="contained"
           color="primary"
           onClick={handleCreateWorkoutPlan}
           className="create-button"
-          sx={{marginBottom:3}}
+          sx={{ marginBottom: 3 }}
         >
           Crea Scheda
         </Button>
+
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       </div>
+
+      <h2 className="workout-title">Visualizza le Schede di un Utente</h2>
+
+      {/* Seleziona l'utente per visualizzare le sue schede */}
+      <FormControl fullWidth margin="normal" className="form-container">
+        <InputLabel>Seleziona un Utente per Visualizzare le Schede</InputLabel>
+        <Select
+          value={selectedViewUserId}
+          onChange={handleSelectViewUser}
+          label="Seleziona un Utente per Visualizzare le Schede"
+        >
+          {userList.map((user) => (
+            <MenuItem key={user.id} value={user.id}>
+              {user.name}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
       <TableContainer component={Paper} className="table-container">
         <Table>

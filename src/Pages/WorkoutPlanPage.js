@@ -13,8 +13,8 @@ function WorkoutPlanPage() {
       <div className="App ">
         <ExerciseNavbar />
         <WorkoutPlan/>
-        <AddExerciseToWorkoutPlan/>
-        <WorkoutPlanDetails/>
+        {/* <AddExerciseToWorkoutPlan/>
+        <WorkoutPlanDetails/> */}
       </div>
     );
   }
