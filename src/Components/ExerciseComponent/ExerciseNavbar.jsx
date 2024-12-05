@@ -25,7 +25,7 @@ function ExerciseNavbar() {
   const navigate = useNavigate();
 
   
-  const avatarURL = localStorage.getItem('avatarURL') || "/path/to/default/avatar.jpg"; //non funziona
+  const avatarURL = localStorage.getItem('avatarURL'); //non funziona
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
