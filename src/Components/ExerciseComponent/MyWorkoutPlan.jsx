@@ -16,87 +16,83 @@ const MyWorkoutPlan = () => {
   const [exercisesByPlan, setExercisesByPlan] = useState({});
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  // Recupero l'ID dell'utente dal token
   const getUserIdFromToken = () => {
     const token = localStorage.getItem("authToken");
     if (!token) return null;
-    const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decodifica base64 del token
-    return decodedToken.sub;  // Supponiamo che l'ID utente sia nel campo "sub"
-  };
-
-  // Recupero le schede di allenamento per l'utente loggato
-  const fetchWorkoutPlans = async () => {
-    const userId = getUserIdFromToken();
-    if (!userId) {
-      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `http://localhost:3001/workout_plans/user/${userId}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        }
-      );
-
-      const data = await response.json();
-      if (response.ok && data.content && Array.isArray(data.content)) {
-        setWorkoutPlans(data.content);
-        fetchExercisesForAllPlans(data.content);
-        setErrorMessage("");
-      } else {
-        setWorkoutPlans([]);
-        setErrorMessage(data.message || "Errore nel recupero delle schede.");
-      }
-    } catch (error) {
-      console.error("Errore nel recupero delle schede:", error);
-      setErrorMessage("Errore nel recupero delle schede. Riprova.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Recupero tutti gli esercizi per ogni scheda
-  const fetchExercisesForAllPlans = async (plans) => {
-    const token = localStorage.getItem("authToken");
-
-    try {
-      const requests = plans.map((plan) =>
-        fetch(`http://localhost:3001/exercise_workout/workout_plan/${plan.id}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }).then((response) => response.json())
-      );
-
-      const responses = await Promise.all(requests);
-      const exercisesData = {};
-
-      responses.forEach((data, index) => {
-        const planId = plans[index].id;
-        if (data.content && Array.isArray(data.content)) {
-          exercisesData[planId] = data.content;
-        } else {
-          exercisesData[planId] = [];
-        }
-      });
-
-      setExercisesByPlan(exercisesData);
-      setErrorMessage("");
-    } catch (error) {
-      console.error("Errore nel recupero degli esercizi:", error);
-      setErrorMessage("Errore nel recupero degli esercizi. Riprova.");
-    }
+    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    return decodedToken.sub;
   };
 
   useEffect(() => {
+    const fetchWorkoutPlans = async () => {
+      const userId = getUserIdFromToken();
+      if (!userId) {
+        setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `http://localhost:3001/workout_plans/user/${userId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            },
+          }
+        );
+
+        const data = await response.json();
+        if (response.ok && data.content && Array.isArray(data.content)) {
+          setWorkoutPlans(data.content);
+          fetchExercisesForAllPlans(data.content);
+          setErrorMessage("");
+        } else {
+          setWorkoutPlans([]);
+          setErrorMessage(data.message || "Errore nel recupero delle schede.");
+        }
+      } catch (error) {
+        console.error("Errore nel recupero delle schede:", error);
+        setErrorMessage("Errore nel recupero delle schede. Riprova.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const fetchExercisesForAllPlans = async (plans) => {
+      const token = localStorage.getItem("authToken");
+
+      try {
+        const requests = plans.map((plan) =>
+          fetch(`http://localhost:3001/exercise_workout/workout_plan/${plan.id}`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }).then((response) => response.json())
+        );
+
+        const responses = await Promise.all(requests);
+        const exercisesData = {};
+
+        responses.forEach((data, index) => {
+          const planId = plans[index].id;
+          if (data.content && Array.isArray(data.content)) {
+            exercisesData[planId] = data.content;
+          } else {
+            exercisesData[planId] = [];
+          }
+        });
+
+        setExercisesByPlan(exercisesData);
+        setErrorMessage("");
+      } catch (error) {
+        console.error("Errore nel recupero degli esercizi:", error);
+        setErrorMessage("Errore nel recupero degli esercizi. Riprova.");
+      }
+    };
+
     fetchWorkoutPlans();
   }, []);
 

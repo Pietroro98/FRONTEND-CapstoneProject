@@ -30,7 +30,9 @@ const WorkoutPlan = () => {
   const fetchUsers = async () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
+      setErrorMessage(
+        "Token di autenticazione mancante. Assicurati di essere loggato."
+      );
       return;
     }
 
@@ -46,7 +48,9 @@ const WorkoutPlan = () => {
       if (data && Array.isArray(data)) {
         setUserList(data);
       } else {
-        setErrorMessage(data.message || "Errore nel recupero degli utenti. Riprova.");
+        setErrorMessage(
+          data.message || "Errore nel recupero degli utenti. Riprova."
+        );
       }
     } catch (error) {
       console.error("Errore nel recupero degli utenti:", error);
@@ -70,7 +74,9 @@ const WorkoutPlan = () => {
 
     const token = localStorage.getItem("authToken");
     if (!token) {
-      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
+      setErrorMessage(
+        "Token di autenticazione mancante. Assicurati di essere loggato."
+      );
       return;
     }
 
@@ -94,7 +100,9 @@ const WorkoutPlan = () => {
         setSelectedUserId("");
         setErrorMessage("");
       } else {
-        setErrorMessage(data.message || "Errore nella creazione della scheda. Riprova.");
+        setErrorMessage(
+          data.message || "Errore nella creazione della scheda. Riprova."
+        );
       }
     } catch (error) {
       console.error("Errore nella creazione della scheda:", error);
@@ -106,7 +114,9 @@ const WorkoutPlan = () => {
   const fetchWorkoutPlans = async (userId) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
+      setErrorMessage(
+        "Token di autenticazione mancante. Assicurati di essere loggato."
+      );
       return;
     }
 
@@ -127,7 +137,9 @@ const WorkoutPlan = () => {
       if (data.content && Array.isArray(data.content)) {
         setWorkoutPlans(data.content);
       } else {
-        setErrorMessage(data.message || "Errore nel recupero delle schede. Riprova.");
+        setErrorMessage(
+          data.message || "Errore nel recupero delle schede. Riprova."
+        );
       }
     } catch (error) {
       console.error("Errore nel recupero delle schede:", error);
