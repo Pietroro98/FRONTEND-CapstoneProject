@@ -22,9 +22,9 @@ const WorkoutPlan = () => {
   const [dataAllenamento, setDataAllenamento] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [workoutPlans, setWorkoutPlans] = useState([]);
-  const [userList, setUserList] = useState([]); // Lista utenti
-  const [selectedUserId, setSelectedUserId] = useState(""); // ID utente per la creazione della scheda
-  const [selectedViewUserId, setSelectedViewUserId] = useState(""); // ID utente per visualizzare le sue schede
+  const [userList, setUserList] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState("");
+  const [selectedViewUserId, setSelectedViewUserId] = useState("");
 
   // Recupera la lista degli utenti
   const fetchUsers = async () => {
@@ -65,7 +65,7 @@ const WorkoutPlan = () => {
       nomeScheda,
       dataCreazione,
       dataAllenamento,
-      userId: selectedUserId, // ID utente selezionato
+      userId: selectedUserId, // ID utente
     };
 
     const token = localStorage.getItem("authToken");
@@ -87,12 +87,12 @@ const WorkoutPlan = () => {
       const data = await response.json();
       console.log("Server response:", data);
       if (response.ok) {
-        fetchWorkoutPlans(selectedUserId); // Recupera le schede dell'utente selezionato
+        fetchWorkoutPlans(selectedUserId);
         setNomeScheda("");
         setDataCreazione("");
         setDataAllenamento("");
-        setSelectedUserId(""); // Reset dell'utente selezionato
-        setErrorMessage(""); // Reset messaggio errore
+        setSelectedUserId("");
+        setErrorMessage("");
       } else {
         setErrorMessage(data.message || "Errore nella creazione della scheda. Riprova.");
       }
@@ -112,7 +112,7 @@ const WorkoutPlan = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:3001/workout_plans/user/${userId}`, // Endpoint per le schede dell'utente specifico
+        `http://localhost:3001/workout_plans/user/${userId}`,
         {
           method: "GET",
           headers: {
@@ -125,7 +125,7 @@ const WorkoutPlan = () => {
       console.log("Workout plans response:", data);
 
       if (data.content && Array.isArray(data.content)) {
-        setWorkoutPlans(data.content); // Aggiorna lo stato con le schede dell'utente
+        setWorkoutPlans(data.content);
       } else {
         setErrorMessage(data.message || "Errore nel recupero delle schede. Riprova.");
       }
@@ -138,13 +138,13 @@ const WorkoutPlan = () => {
   // Funzione per gestire la selezione dell'utente per visualizzare le sue schede
   const handleSelectViewUser = (e) => {
     const userId = e.target.value;
-    console.log("User selected for viewing: ", userId); // Verifica l'ID dell'utente selezionato per visualizzare le schede
+    console.log("User selected for viewing: ", userId);
     setSelectedViewUserId(userId);
-    fetchWorkoutPlans(userId); // Recupera le schede solo per l'utente selezionato
+    fetchWorkoutPlans(userId);
   };
 
   useEffect(() => {
-    fetchUsers(); // Recupera la lista degli utenti all'inizio
+    fetchUsers();
   }, []);
 
   return (

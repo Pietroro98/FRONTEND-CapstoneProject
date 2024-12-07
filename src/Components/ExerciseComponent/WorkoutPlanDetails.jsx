@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
-import { jwtDecode } from "jwt-decode";
 import "./WorkoutPlanDetails.css";
 
 const WorkoutPlanDetails = () => {
