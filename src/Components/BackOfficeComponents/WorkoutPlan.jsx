@@ -226,7 +226,7 @@ const WorkoutPlan = () => {
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       </div>
 
-      <h2 className="workout-title">Visualizza le Schede di un Utente</h2>
+      <h2 className="workout-title">Visualizza le Schede Create</h2>
 
       {/* Seleziona l'utente per visualizzare le sue schede */}
       <FormControl fullWidth margin="normal" className="form-container">

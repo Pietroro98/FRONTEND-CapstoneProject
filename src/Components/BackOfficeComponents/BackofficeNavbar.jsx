@@ -13,7 +13,6 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from 'react-router-dom';
 
 const pages = [
   "Crea Scheda", 
@@ -21,14 +20,13 @@ const pages = [
   "Schede utenti", 
   "Crea esercizio"
 ];
-const settings = ['HomePage', 'Account', 'Login', 'Logout']; // Aggiungi HomePage
 
-function BackofficeNavbar() {
+const settings = ['HomePage', 'Account', 'Login', 'Logout'];
+
+function BackofficeNavbar({ onPageChange }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const navigate = useNavigate();
-
-  const avatarURL = localStorage.getItem('avatarURL'); // Se hai una URL per l'avatar dell'utente
+  const avatarURL = localStorage.getItem('avatarURL');
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -47,135 +45,35 @@ function BackofficeNavbar() {
   };
 
   const handleNavigate = (page) => {
-    switch (page) {
-      case "Crea Scheda":
-        navigate("/WorkoutPlan");
-        break;
-      case "Aggiungi Esercizio alla scheda":
-        navigate("/AddExerciseToWorkoutPlan");
-        break;
-      case "Schede utenti":
-        navigate("/WorkoutPlanDetails");
-        break;
-      case "Crea esercizio":
-        navigate("/CreateExercise");
-        break;
-      case "HomePage": // Aggiungi la logica per HomePage
-        navigate("/ExercisePage"); // Reindirizza a ExercisePage
-        break;
-      default:
-        break;
-    }
+    // Pass the selected page to the parent (BackOfficePage)
+    onPageChange(page);
+    handleCloseNavMenu();
   };
 
   return (
-    <AppBar position="fixed"
-      sx={{
-        backgroundColor: "#000000",
-        borderRadius: "20px",
-        margin: "10px",
-        width: "calc(100% - 20px)",
-      }}>
+    <AppBar position="fixed" sx={{ backgroundColor: "#000000", borderRadius: "20px", margin: "10px", width: "calc(100% - 20px)" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            <FontAwesomeIcon
-              className="me-2"
-              icon={faDumbbell}
-              size="xl"
-              style={{ color: "#763abb" }}
-            />
+          <Typography variant="h6" noWrap sx={{ mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace', fontWeight: 700, letterSpacing: '.3rem', color: 'inherit', textDecoration: 'none' }}>
+            <FontAwesomeIcon className="me-2" icon={faDumbbell} size="xl" style={{ color: "#763abb" }} />
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
+            <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar" aria-haspopup="true" onClick={handleOpenNavMenu} color="inherit">
               <MenuIcon />
             </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{ display: { xs: 'block', md: 'none' } }}
-            >
+            <Menu id="menu-appbar" anchorEl={anchorElNav} anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} keepMounted transformOrigin={{ vertical: 'top', horizontal: 'left' }} open={Boolean(anchorElNav)} onClose={handleCloseNavMenu}>
               {pages.map((page) => (
-                <MenuItem key={page} onClick={() => { handleNavigate(page); handleCloseNavMenu(); }}
-                  sx={{
-                    '&:hover': { color: "#763abb", fontWeight: "bold", backgroundColor: 'transparent' },
-                  }}
-                >
+                <MenuItem key={page} onClick={() => handleNavigate(page)} sx={{ '&:hover': { color: "#763abb", fontWeight: "bold", backgroundColor: 'transparent' } }}>
                   <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            Backoffice
-            <FontAwesomeIcon
-              className="me-2"
-              icon={faDumbbell}
-              size="xl"
-              style={{ color: "#763abb" }}
-            />
-          </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={() => handleNavigate(page)}
-                sx={{
-                  my: 2, color: 'white', display: 'block', '&:hover': {
-                    color: '#763abb', fontWeight: 'bold', backgroundColor: 'transparent',
-                  },
-                }}
-              >
+              <Button key={page} onClick={() => handleNavigate(page)} sx={{ my: 2, color: 'white', display: 'block', '&:hover': { color: '#763abb', fontWeight: 'bold', backgroundColor: 'transparent' } }}>
                 {page}
               </Button>
             ))}
@@ -187,32 +85,9 @@ function BackofficeNavbar() {
                 <Avatar src={avatarURL} />
               </IconButton>
             </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
+            <Menu sx={{ mt: '45px' }} id="menu-appbar" anchorEl={anchorElUser} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} keepMounted transformOrigin={{ vertical: 'top', horizontal: 'right' }} open={Boolean(anchorElUser)} onClose={handleCloseUserMenu}>
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}
-                  sx={{
-                    '&:hover': {
-                      color: '#763abb',
-                      fontWeight: 'bold',
-                      backgroundColor: 'transparent',
-                    },
-                  }}
-                >
+                <MenuItem key={setting} onClick={handleCloseUserMenu} sx={{ '&:hover': { color: '#763abb', fontWeight: 'bold', backgroundColor: 'transparent' } }}>
                   <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>
               ))}
