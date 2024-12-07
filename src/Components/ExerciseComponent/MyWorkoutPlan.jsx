@@ -9,7 +9,7 @@ import {
   Paper,
   CircularProgress,
 } from "@mui/material";
-import "./WorkoutPlanDetails.css";
+import "../BackOfficeComponents/WorkoutPlanDetails.css";
 
 const MyWorkoutPlan = () => {
   const [workoutPlans, setWorkoutPlans] = useState([]);

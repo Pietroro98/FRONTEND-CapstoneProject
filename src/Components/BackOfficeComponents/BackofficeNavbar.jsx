@@ -1,33 +1,39 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-const pages = ["Esercizi", "Scheda Allenamento", "Calcolatore"];
-const settings = ["BackOffice", "Account", "Login", "Logout"];
+const pages = [
+  "Crea Scheda", 
+  "Aggiungi Esercizio alla scheda", 
+  "Schede utenti", 
+  "Crea esercizio"
+];
+const settings = ['HomePage', 'Account', 'Login', 'Logout']; // Aggiungi HomePage
 
-function ExerciseNavbar() {
+function BackofficeNavbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
 
-  const avatarURL = localStorage.getItem("avatarURL"); //non funziona
+  const avatarURL = localStorage.getItem('avatarURL'); // Se hai una URL per l'avatar dell'utente
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -42,17 +48,20 @@ function ExerciseNavbar() {
 
   const handleNavigate = (page) => {
     switch (page) {
-      case "Esercizi":
-        navigate("/esercizi");
+      case "Crea Scheda":
+        navigate("/WorkoutPlan");
         break;
-      case "Scheda Allenamento":
-        navigate("/scheda-allenamento");
+      case "Aggiungi Esercizio alla scheda":
+        navigate("/AddExerciseToWorkoutPlan");
         break;
-      case "Calcolatore":
-        navigate("/calcolatore");
+      case "Schede utenti":
+        navigate("/WorkoutPlanDetails");
         break;
-      case "BackOffice":
-        navigate("/backoffice");
+      case "Crea esercizio":
+        navigate("/CreateExercise");
+        break;
+      case "HomePage": // Aggiungi la logica per HomePage
+        navigate("/ExercisePage"); // Reindirizza a ExercisePage
         break;
       default:
         break;
@@ -60,15 +69,13 @@ function ExerciseNavbar() {
   };
 
   return (
-    <AppBar
-      position="fixed"
+    <AppBar position="fixed"
       sx={{
         backgroundColor: "#000000",
         borderRadius: "20px",
         margin: "10px",
         width: "calc(100% - 20px)",
-      }}
-    >
+      }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -78,12 +85,12 @@ function ExerciseNavbar() {
             href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
             }}
           >
             <FontAwesomeIcon
@@ -94,7 +101,7 @@ function ExerciseNavbar() {
             />
           </Typography>
 
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -109,34 +116,25 @@ function ExerciseNavbar() {
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left",
+                vertical: 'bottom',
+                horizontal: 'left',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "left",
+                vertical: 'top',
+                horizontal: 'left',
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
-              sx={{ display: { xs: "block", md: "none" } }}
+              sx={{ display: { xs: 'block', md: 'none' } }}
             >
               {pages.map((page) => (
-                <MenuItem
-                  key={page}
-                  onClick={() => {
-                    handleNavigate(page);
-                    handleCloseNavMenu();
-                  }}
+                <MenuItem key={page} onClick={() => { handleNavigate(page); handleCloseNavMenu(); }}
                   sx={{
-                    "&:hover": {
-                      color: "#763abb",
-                      fontWeight: "bold",
-                      backgroundColor: "transparent",
-                    },
+                    '&:hover': { color: "#763abb", fontWeight: "bold", backgroundColor: 'transparent' },
                   }}
                 >
-                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
+                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -149,37 +147,32 @@ function ExerciseNavbar() {
             href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
-              display: { xs: "flex", md: "none" },
+              display: { xs: 'flex', md: 'none' },
               flexGrow: 1,
-              fontFamily: "monospace",
+              fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
             }}
           >
-            Ghisa
+            Backoffice
             <FontAwesomeIcon
               className="me-2"
               icon={faDumbbell}
               size="xl"
               style={{ color: "#763abb" }}
             />
-            Gym
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={() => handleNavigate(page)}
                 sx={{
-                  my: 2,
-                  color: "white",
-                  display: "block",
-                  "&:hover": {
-                    color: "#763abb",
-                    fontWeight: "bold",
-                    backgroundColor: "transparent",
+                  my: 2, color: 'white', display: 'block', '&:hover': {
+                    color: '#763abb', fontWeight: 'bold', backgroundColor: 'transparent',
                   },
                 }}
               >
@@ -187,46 +180,40 @@ function ExerciseNavbar() {
               </Button>
             ))}
           </Box>
+
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar src={avatarURL} /> {/* non funziona */}
+                <Avatar src={avatarURL} />
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               keepMounted
               transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
+                vertical: 'top',
+                horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={() => {
-                    handleNavigate(setting);
-                    handleCloseUserMenu();
-                  }}
+                <MenuItem key={setting} onClick={handleCloseUserMenu}
                   sx={{
-                    "&:hover": {
-                      color: "#763abb",
-                      fontWeight: "bold",
-                      backgroundColor: "transparent",
+                    '&:hover': {
+                      color: '#763abb',
+                      fontWeight: 'bold',
+                      backgroundColor: 'transparent',
                     },
                   }}
                 >
-                  <Typography sx={{ textAlign: "center" }}>
-                    {setting}
-                  </Typography>
+                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -236,4 +223,5 @@ function ExerciseNavbar() {
     </AppBar>
   );
 }
-export default ExerciseNavbar;
+
+export default BackofficeNavbar;

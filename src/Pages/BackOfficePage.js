@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import "../App.css";
-import ExerciseNavbar from "../Components/ExerciseComponent/ExerciseNavbar";
-import WorkoutPlanDetails from "../Components/ExerciseComponent/WorkoutPlanDetails";
-import WorkoutPlan from "../Components/ExerciseComponent/WorkoutPlan";
-import AddExerciseToWorkoutPlan from "../Components/ExerciseComponent/AddExerciseToWorkoutPlan";
+import BackofficeNavbar from "../Components/BackOfficeComponents/BackofficeNavbar";
+import WorkoutPlan from "../Components/BackOfficeComponents/WorkoutPlan";
+import AddExerciseToWorkoutPlan from "../Components/BackOfficeComponents/AddExerciseToWorkoutPlan";
+import WorkoutPlanDetails from "../Components/BackOfficeComponents/WorkoutPlanDetails";
 
 
 function BackOfficePage() {
@@ -13,7 +13,7 @@ function BackOfficePage() {
     
     return (
       <div className="App ">
-        {/* <ExerciseNavbar /> */}
+        <BackofficeNavbar/>
         <WorkoutPlan/>
         <AddExerciseToWorkoutPlan/>
         <WorkoutPlanDetails/>
