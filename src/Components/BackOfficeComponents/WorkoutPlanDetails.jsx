@@ -137,11 +137,11 @@ const WorkoutPlanDetails = () => {
 
   return (
     <div className="workout-plan-details-container">
-      <h2>Dettagli delle Schede di Allenamento</h2>
+      <h2 >Dettagli delle Schede di Allenamento</h2>
 
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
-      <FormControl fullWidth margin="normal">
+      <FormControl fullWidth margin="normal" className="form-container">
         <InputLabel>Seleziona Utente</InputLabel>
         <Select
           value={selectedUserId}
