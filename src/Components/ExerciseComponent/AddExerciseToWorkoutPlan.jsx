@@ -7,10 +7,11 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
-import { jwtDecode } from "jwt-decode";
 import "./WorkoutPlan.css";
 
 const AddExerciseToWorkoutPlan = () => {
+  const [users, setUsers] = useState([]);
+  const [selectedUserId, setSelectedUserId] = useState("");
   const [workoutPlans, setWorkoutPlans] = useState([]);
   const [selectedWorkoutPlan, setSelectedWorkoutPlan] = useState("");
   const [exercises, setExercises] = useState([]);
@@ -20,8 +21,9 @@ const AddExerciseToWorkoutPlan = () => {
   const [pesoUsato, setPesoUsato] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Recupera le schede di allenamento dell'utente
-  const fetchWorkoutPlans = async () => {
+
+   // Recupera utenti per poi selezionarli
+   const fetchUsers = async () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
       setErrorMessage(
@@ -31,10 +33,38 @@ const AddExerciseToWorkoutPlan = () => {
     }
 
     try {
-      const decodedToken = jwtDecode(token);
-      const userId = decodedToken.sub;
+      const response = await fetch("http://localhost:3001/user/all", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      const response = await fetch(
+      const userData = await response.json();
+      if (response.ok) {
+        setUsers(userData);
+        setErrorMessage("");
+      } else {
+        setErrorMessage(userData.message || "Errore nel recupero utenti.");
+      }
+    } catch (error) {
+      console.error("Errore nel recupero utenti:", error);
+      setErrorMessage("Errore nel recupero utenti. Riprova.");
+    }
+  };
+
+  // Recupera schede di allenamento per utente selezionato
+  const fetchWorkoutPlans = async (userId) => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      setErrorMessage(
+        "Token di autenticazione mancante. Assicurati di essere loggato."
+      );
+      return;
+    }
+
+    try {
+      const workoutResponse = await fetch(
         `http://localhost:3001/workout_plans/user/${userId}`,
         {
           method: "GET",
@@ -44,12 +74,13 @@ const AddExerciseToWorkoutPlan = () => {
         }
       );
 
-      const data = await response.json();
-      if (data.content && Array.isArray(data.content)) {
-        setWorkoutPlans(data.content);
+      const workoutData = await workoutResponse.json();
+      if (workoutResponse.ok && Array.isArray(workoutData.content)) {
+        setWorkoutPlans(workoutData.content);
+        setErrorMessage("");
       } else {
         setErrorMessage(
-          data.message || "Errore nel recupero delle schede. Riprova."
+          workoutData.message || "Errore nel recupero delle schede."
         );
       }
     } catch (error) {
@@ -58,7 +89,7 @@ const AddExerciseToWorkoutPlan = () => {
     }
   };
 
-  // Recupero gli esercizi disponibili
+  // Recupera esercizi
   const fetchExercises = async () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -77,14 +108,12 @@ const AddExerciseToWorkoutPlan = () => {
       });
 
       const data = await response.json();
-      console.log("Risposta dal server esercizi:", data);
-
-      if (response.ok) {
-        setExercises(data.content || []);
+      if (response.ok && Array.isArray(data.content)) {
+        setExercises(data.content);
         setErrorMessage("");
       } else {
         setErrorMessage(
-          data.message || "Errore nel recupero degli esercizi. Riprova."
+          data.message || "Errore nel recupero degli esercizi."
         );
       }
     } catch (error) {
@@ -93,7 +122,7 @@ const AddExerciseToWorkoutPlan = () => {
     }
   };
 
-  // Aggiungo esercizio alla scheda di allenamento
+  // Aggiunge un esercizio alla scheda di allenamento
   const handleAddExerciseToWorkout = async () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
@@ -142,15 +171,36 @@ const AddExerciseToWorkoutPlan = () => {
   };
 
   useEffect(() => {
-    fetchWorkoutPlans();
+    fetchUsers();
     fetchExercises();
   }, []);
+
+  useEffect(() => {
+    if (selectedUserId) {
+      fetchWorkoutPlans(selectedUserId);
+    }
+  }, [selectedUserId]);
 
   return (
     <div className="add-exercise-container">
       <h2 className="add-exercise-title">Aggiungi Esercizio alla Scheda</h2>
 
       <div className="form-container">
+        <FormControl margin="normal" fullWidth>
+          <InputLabel>Seleziona Utente</InputLabel>
+          <Select
+            value={selectedUserId}
+            onChange={(e) => setSelectedUserId(e.target.value)}
+            label="Seleziona Utente"
+          >
+            {users.map((user) => (
+              <MenuItem key={user.id} value={user.id}>
+                {user.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
         <FormControl margin="normal" fullWidth>
           <InputLabel>Seleziona Scheda</InputLabel>
           <Select

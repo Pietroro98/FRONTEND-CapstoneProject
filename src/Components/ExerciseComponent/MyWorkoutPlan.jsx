@@ -8,65 +8,39 @@ import {
   TableRow,
   Paper,
   CircularProgress,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
 } from "@mui/material";
 import "./WorkoutPlanDetails.css";
 
-const WorkoutPlanDetails = () => {
-  const [users, setUsers] = useState([]);
-  const [selectedUserId, setSelectedUserId] = useState("");
+const MyWorkoutPlan = () => {
   const [workoutPlans, setWorkoutPlans] = useState([]);
   const [exercisesByPlan, setExercisesByPlan] = useState({});
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Recupero tutti gli utenti
-  const fetchUsers = async () => {
+  // Recupero l'ID dell'utente dal token
+  const getUserIdFromToken = () => {
     const token = localStorage.getItem("authToken");
-    if (!token) {
-      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
-      return;
-    }
-
-    try {
-      const response = await fetch("http://localhost:3001/user/all", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await response.json();
-      if (response.ok && Array.isArray(data)) {
-        setUsers(data);
-        setErrorMessage("");
-      } else {
-        setErrorMessage(data.message || "Errore nel recupero degli utenti.");
-      }
-    } catch (error) {
-      console.error("Errore nel recupero degli utenti:", error);
-      setErrorMessage("Errore nel recupero degli utenti. Riprova.");
-    }
+    if (!token) return null;
+    const decodedToken = JSON.parse(atob(token.split('.')[1])); // Decodifica base64 del token
+    return decodedToken.sub;  // Supponiamo che l'ID utente sia nel campo "sub"
   };
 
-  // Recupero le schede di allenamento per l'utente selezionato
-  const fetchWorkoutPlans = async (userId) => {
-    const token = localStorage.getItem("authToken");
-    if (!token) {
+  // Recupero le schede di allenamento per l'utente loggato
+  const fetchWorkoutPlans = async () => {
+    const userId = getUserIdFromToken();
+    if (!userId) {
       setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
       return;
     }
 
+    setLoading(true);
     try {
       const response = await fetch(
         `http://localhost:3001/workout_plans/user/${userId}`,
         {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
           },
         }
       );
@@ -82,17 +56,15 @@ const WorkoutPlanDetails = () => {
       }
     } catch (error) {
       console.error("Errore nel recupero delle schede:", error);
-      setErrorMessage("Errore nel recupero delle schede.");
+      setErrorMessage("Errore nel recupero delle schede. Riprova.");
+    } finally {
+      setLoading(false);
     }
   };
 
   // Recupero tutti gli esercizi per ogni scheda
   const fetchExercisesForAllPlans = async (plans) => {
     const token = localStorage.getItem("authToken");
-    if (!token) {
-      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
-      return;
-    }
 
     try {
       const requests = plans.map((plan) =>
@@ -124,45 +96,23 @@ const WorkoutPlanDetails = () => {
     }
   };
 
-  // Gestione della selezione dell'utente
-  const handleUserSelection = (userId) => {
-    setSelectedUserId(userId);
-    setLoading(true);
-    fetchWorkoutPlans(userId).finally(() => setLoading(false));
-  };
-
   useEffect(() => {
-    fetchUsers();
+    fetchWorkoutPlans();
   }, []);
 
   return (
     <div className="workout-plan-details-container">
-      <h2>Dettagli delle Schede di Allenamento</h2>
+      <h2>Le tue Schede di Allenamento</h2>
 
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
-      <FormControl fullWidth margin="normal">
-        <InputLabel>Seleziona Utente</InputLabel>
-        <Select
-          value={selectedUserId}
-          onChange={(e) => handleUserSelection(e.target.value)}
-          label="Seleziona Utente"
-        >
-          {users.map((user) => (
-            <MenuItem key={user.id} value={user.id}>
-              {user.username || user.email} {/* Mostra username o email */}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
       {loading ? (
-        <div className="loading-container">
+        <div>
           <CircularProgress />
           <p>Caricamento in corso...</p>
         </div>
       ) : workoutPlans.length === 0 ? (
-        <p>Seleziona un utente per vedere le sue schede di allenamento.</p>
+        <p>Non hai ancora creato schede di allenamento.</p>
       ) : (
         workoutPlans.map((plan) => (
           <div key={plan.id} className="workout-plan-section">
@@ -204,4 +154,4 @@ const WorkoutPlanDetails = () => {
   );
 };
 
-export default WorkoutPlanDetails;
+export default MyWorkoutPlan;
