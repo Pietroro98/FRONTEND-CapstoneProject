@@ -20,6 +20,7 @@ const pages = [
   "Aggiungi Esercizio alla scheda",
   "Schede utenti",
   "Crea esercizio",
+  "Upload Avatar"
 ];
 
 const settings = ["HomePage", "Account", "Login", "Logout"];

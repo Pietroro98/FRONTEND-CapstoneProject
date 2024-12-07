@@ -5,6 +5,7 @@ import WorkoutPlan from "../Components/BackOfficeComponents/WorkoutPlan";
 import AddExerciseToWorkoutPlan from "../Components/BackOfficeComponents/AddExerciseToWorkoutPlan";
 import WorkoutPlanDetails from "../Components/BackOfficeComponents/WorkoutPlanDetails";
 import CreateExercise from "../Components/BackOfficeComponents/CreateExercise";
+import UploadAvatarToExercise from "../Components/BackOfficeComponents/UploadAvatarToExercise";
 
 function BackOfficePage() {
   const [currentPage, setCurrentPage] = useState("Crea Scheda");
@@ -23,6 +24,8 @@ function BackOfficePage() {
         return <WorkoutPlanDetails />;
       case "Crea esercizio":
         return <CreateExercise />;
+        case "Upload Avatar":
+          return <UploadAvatarToExercise />;
       default:
         return <WorkoutPlan />;
     }
