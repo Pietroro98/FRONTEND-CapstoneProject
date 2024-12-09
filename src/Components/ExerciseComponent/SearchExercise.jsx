@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogActions,
 } from '@mui/material';
+import "./SearchExercise.css";
 
 function SearchExercise() {
   const [exercises, setExercises] = useState([]);
@@ -132,14 +133,15 @@ function SearchExercise() {
       </Box>
 
       {/* Pulsante per avviare la ricerca */}
-      <Box sx={{ textAlign: 'center', mt: 4 }}>
+      <Box sx={{ textAlign: 'center', mt: 4}}>
         <Button
           variant="contained"
           color="primary"
           onClick={fetchExercises} 
+          sx={{ backgroundColor: "#763abb"}}
         >
           Cerca
-        </Button>
+        </Button> 
       </Box>
       {error && (
         <Typography color="error" sx={{ textAlign: 'center', mt: 4 }}>
@@ -157,7 +159,7 @@ function SearchExercise() {
         }}
       >
         {filteredExercises.map((exercise) => (
-          <Card key={exercise.id} sx={{ maxWidth: 345, mx: 'auto', color: "" }}>
+          <Card key={exercise.id} sx={{ maxWidth: 345, mx: 'auto' }}>
             <CardMedia
               component="img"
               height="300"
@@ -175,7 +177,7 @@ function SearchExercise() {
                 size="small"
                 color="primary"
                 onClick={() => handleOpenDialog(exercise)}
-                sx={{ color: "white"}}
+                sx={{ color: "#763abb"}}
               >
                 Dettagli
               </Button>
@@ -190,20 +192,20 @@ function SearchExercise() {
           <DialogTitle>{selectedExercise.name}</DialogTitle>
           <DialogContent>
             <Typography>
-              <strong >Attrezzatura:</strong> {selectedExercise.equipment}
+              <strong className="strong-title">Attrezzatura:</strong> {selectedExercise.equipment}
             </Typography>
             <Typography>
-              <strong >Target:</strong> {selectedExercise.target}
+              <strong className="strong-title">Target:</strong> {selectedExercise.target}
             </Typography>
             <Typography>
-              <strong>Muscoli secondari:</strong> {selectedExercise.secondaryMuscles}
+              <strong className="strong-title">Muscoli secondari:</strong> {selectedExercise.secondaryMuscles}
             </Typography>
             <Typography>
-              <strong>Istruzioni:</strong> {selectedExercise.instructions}
+              <strong className="strong-title">Istruzioni:</strong> {selectedExercise.instructions}
             </Typography>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleCloseDialog} sx={{ color: "red"}}>
+            <Button onClick={handleCloseDialog} sx={{  color: "#763abb"}}>
               Chiudi
             </Button>
           </DialogActions>

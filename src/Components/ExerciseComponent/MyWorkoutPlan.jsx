@@ -8,18 +8,30 @@ import {
   TableRow,
   Paper,
   CircularProgress,
+  IconButton,
+  TextField,
 } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import "../BackOfficeComponents/WorkoutPlanDetails.css";
+import { Snackbar, Alert } from "@mui/material";
 
 const MyWorkoutPlan = () => {
   const [workoutPlans, setWorkoutPlans] = useState([]);
   const [exercisesByPlan, setExercisesByPlan] = useState({});
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [editingExercise, setEditingExercise] = useState(null);
+
+  // Gestione dello stato per il Snackbar
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
+
   const getUserIdFromToken = () => {
     const token = localStorage.getItem("authToken");
     if (!token) return null;
-    const decodedToken = JSON.parse(atob(token.split('.')[1]));
+    const decodedToken = JSON.parse(atob(token.split(".")[1]));
     return decodedToken.sub;
   };
 
@@ -27,7 +39,9 @@ const MyWorkoutPlan = () => {
     const fetchWorkoutPlans = async () => {
       const userId = getUserIdFromToken();
       if (!userId) {
-        setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
+        setErrorMessage(
+          "Token di autenticazione mancante. Assicurati di essere loggato."
+        );
         return;
       }
 
@@ -65,12 +79,15 @@ const MyWorkoutPlan = () => {
 
       try {
         const requests = plans.map((plan) =>
-          fetch(`http://localhost:3001/exercise_workout/workout_plan/${plan.id}`, {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }).then((response) => response.json())
+          fetch(
+            `http://localhost:3001/exercise_workout/workout_plan/${plan.id}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          ).then((response) => response.json())
         );
 
         const responses = await Promise.all(requests);
@@ -95,6 +112,87 @@ const MyWorkoutPlan = () => {
 
     fetchWorkoutPlans();
   }, []);
+
+  const handleEdit = (exerciseId, exerciseData) => {
+    setEditingExercise({
+      ...exerciseData,
+      id: exerciseId,
+      planId: exerciseData.workoutPlan.id,
+    });
+  };
+
+  const handleSave = async (exerciseId) => {
+    if (!editingExercise) {
+      setErrorMessage("Non ci sono modifiche da salvare.");
+      setMessage("Non ci sono modifiche da salvare.");
+      setSeverity("error");
+      setOpen(true);
+      return;
+    }
+
+    // Aggiorno i dati localmente
+    const updatedExercises = exercisesByPlan[editingExercise.planId].map(
+      (exercise) => {
+        if (exercise.id === exerciseId) {
+          return { ...exercise, ...editingExercise };
+        }
+        return exercise;
+      }
+    );
+
+    // (setta gli esercizi aggiornati per quel piano)
+    const updatedExercisesByPlan = {
+      ...exercisesByPlan,
+      [editingExercise.planId]: updatedExercises,
+    };
+    setExercisesByPlan(updatedExercisesByPlan);
+
+    const updatedData = {
+      ripetizioni: editingExercise.ripetizioni,
+      serie: editingExercise.serie,
+      pesoUsato: editingExercise.pesoUsato,
+    };
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/exercise_workout/${exerciseId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedData),
+        }
+      );
+
+      const data = await response.json();
+      if (response.ok) {
+        setErrorMessage("");
+        setMessage("Dati salvati con successo!");
+        setSeverity("success");
+        setOpen(true);
+      } else {
+        setErrorMessage(data.message || "Errore nel salvataggio.");
+        setMessage(data.message || "Errore nel salvataggio.");
+        setSeverity("error");
+        setOpen(true);
+      }
+    } catch (error) {
+      console.error("Errore nel salvataggio:", error);
+      setErrorMessage("Errore nel salvataggio.");
+      setMessage("Errore nel salvataggio.");
+      setSeverity("error");
+      setOpen(true);
+    } finally {
+      setEditingExercise(null);
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditingExercise((prev) => ({ ...prev, [name]: value }));
+  };
 
   return (
     <div className="workout-plan-details-container">
@@ -121,12 +219,13 @@ const MyWorkoutPlan = () => {
                     <TableCell>Serie</TableCell>
                     <TableCell>Ripetizioni</TableCell>
                     <TableCell>Peso Usato</TableCell>
+                    <TableCell>Azioni</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {(exercisesByPlan[plan.id] || []).length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={4}>
+                      <TableCell colSpan={5}>
                         Nessun esercizio disponibile per questa scheda.
                       </TableCell>
                     </TableRow>
@@ -134,15 +233,80 @@ const MyWorkoutPlan = () => {
                     exercisesByPlan[plan.id].map((exercise) => (
                       <TableRow key={exercise.id}>
                         <TableCell>{exercise.exercise.name}</TableCell>
-                        <TableCell>{exercise.serie}</TableCell>
-                        <TableCell>{exercise.ripetizioni}</TableCell>
-                        <TableCell>{exercise.pesoUsato}</TableCell>
+                        <TableCell>
+                          {editingExercise?.id === exercise.id ? (
+                            <TextField
+                              name="serie"
+                              value={editingExercise.serie}
+                              onChange={handleChange}
+                              size="small"
+                            />
+                          ) : (
+                            exercise.serie
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {editingExercise?.id === exercise.id ? (
+                            <TextField
+                              name="ripetizioni"
+                              value={editingExercise.ripetizioni}
+                              onChange={handleChange}
+                              size="small"
+                            />
+                          ) : (
+                            exercise.ripetizioni
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {editingExercise?.id === exercise.id ? (
+                            <TextField
+                              name="pesoUsato"
+                              value={editingExercise.pesoUsato}
+                              onChange={handleChange}
+                              size="small"
+                            />
+                          ) : (
+                            exercise.pesoUsato
+                          )}
+                        </TableCell>
+                        <TableCell>
+                          {editingExercise?.id === exercise.id ? (
+                            <IconButton onClick={() => handleSave(exercise.id)}>
+                              <FontAwesomeIcon icon={faSave} />
+                            </IconButton>
+                          ) : (
+                            <IconButton
+                              onClick={() => handleEdit(exercise.id, exercise)}
+                            >
+                              <FontAwesomeIcon icon={faEdit} />
+                            </IconButton>
+                          )}
+                        </TableCell>
                       </TableRow>
                     ))
                   )}
                 </TableBody>
               </Table>
             </TableContainer>
+            <Snackbar
+              open={open}
+              autoHideDuration={6000}
+              onClose={() => setOpen(false)}
+              anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            >
+              <Alert
+                onClose={() => setOpen(false)}
+                severity={severity}
+                variant="filled"
+                sx={{
+                  width: "100%",
+                  backgroundColor: "#763abb",
+                  color: "#ffffff",
+                }}
+              >
+                {message}
+              </Alert>
+            </Snackbar>
           </div>
         ))
       )}
