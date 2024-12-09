@@ -54,6 +54,14 @@ function ExerciseNavbar() {
       case "BackOffice":
         navigate("/backoffice");
         break;
+        case "Login":
+        navigate("/login");
+        break;
+        case "Logout":
+      localStorage.removeItem("avatarURL");
+      localStorage.removeItem("authToken");
+      navigate("/");
+      break;
       default:
         break;
     }

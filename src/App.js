@@ -18,11 +18,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/esercizi" element={<ExercisePage />} />
           <Route path="/scheda-allenamento" element={<WorkoutPlanPage />} />
-          <Route path="/backoffice" element={<BackOfficePage />} />
+          <Route path="/backoffice" element={<BackOfficePage />}/>
         </Routes>
-     
-
-
     </div>
     </Router>
   );
