@@ -204,11 +204,12 @@ function Register() {
         open={open}
         autoHideDuration={6000}
         onClose={() => setOpen(false)}
+        anchorOrigin={{vertical: "top", horizontal: "right" }}
       >
         <Alert
           onClose={() => setOpen(false)}
           severity={severity}
-          sx={{ width: "100%" }}
+          sx={{ width: "100%" , backgroundColor: "#763abb", color: "#ffffff"}}
         >
           {message}
         </Alert>

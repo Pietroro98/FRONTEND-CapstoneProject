@@ -86,12 +86,8 @@ function ExerciseNavbar() {
     setSeverity("success");
     setOpen(true);
      setTimeout(() => {
-    navigate("/home");
+    navigate("/register");
   }, 1500);
-
-  setTimeout(() => {
-    navigate("/esercizi");
-  }, 1600);
   }
 
   return (
@@ -276,8 +272,12 @@ function ExerciseNavbar() {
       open={open}
       autoHideDuration={6000}
       onClose={() => setOpen(false)}
+      anchorOrigin={{vertical: "top", horizontal: "center" }}
     >
-      <Alert onClose={() => setOpen(false)} severity={severity} sx={{ width: "100%" }}>
+      <Alert onClose={() => setOpen(false)} variant="filled" severity={severity} sx={{
+         width: "100%"
+         , backgroundColor: "#763abb",
+         color: "#ffffff"}}>
         {message}
       </Alert>
     </Snackbar>
