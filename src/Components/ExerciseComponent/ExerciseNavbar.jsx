@@ -14,6 +14,10 @@ import MenuItem from "@mui/material/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { Snackbar, Alert } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { logoutU } from "../../redux/reducers/authSlice";
+
 
 const pages = ["Esercizi", "Scheda Allenamento", "Calcolatore"];
 const settings = ["BackOffice", "Account", "Login", "Logout"];
@@ -21,9 +25,15 @@ const settings = ["BackOffice", "Account", "Login", "Logout"];
 function ExerciseNavbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState("");
+  const [severity, setSeverity] = React.useState("success");
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const avatarURL = localStorage.getItem("avatarURL"); //non funziona
+  const avatarURL = localStorage.getItem("avatarURL");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -58,16 +68,34 @@ function ExerciseNavbar() {
         navigate("/login");
         break;
         case "Logout":
-      localStorage.removeItem("avatarURL");
-      localStorage.removeItem("authToken");
-      navigate("/esercizi");
+        handleLogout();
       break;
       default:
         break;
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("avatarURL");
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("isAuth");
+
+    dispatch(logoutU());
+
+    setMessage("Logout effettuato con successo!");
+    setSeverity("success");
+    setOpen(true);
+     setTimeout(() => {
+    navigate("/home");
+  }, 1500);
+
+  setTimeout(() => {
+    navigate("/esercizi");
+  }, 1600);
+  }
+
   return (
+    <>
     <AppBar
       position="fixed"
       sx={{
@@ -198,7 +226,7 @@ function ExerciseNavbar() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar src={avatarURL} /> {/* non funziona */}
+                <Avatar src={avatarURL} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -242,6 +270,18 @@ function ExerciseNavbar() {
         </Toolbar>
       </Container>
     </AppBar>
+
+    {/* Snackbar per il messaggio di logout */}
+    <Snackbar
+      open={open}
+      autoHideDuration={6000}
+      onClose={() => setOpen(false)}
+    >
+      <Alert onClose={() => setOpen(false)} severity={severity} sx={{ width: "100%" }}>
+        {message}
+      </Alert>
+    </Snackbar>
+  </>
   );
 }
 export default ExerciseNavbar;
