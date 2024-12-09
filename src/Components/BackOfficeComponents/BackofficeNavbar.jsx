@@ -127,6 +127,32 @@ function BackofficeNavbar({ onPageChange }) {
             </Menu>
           </Box>
 
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: "flex", md: "none" },
+              flexGrow: 1,
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            Ghisa
+            <FontAwesomeIcon
+              className="me-2"
+              icon={faDumbbell}
+              size="xl"
+              style={{ color: "#763abb" }}
+            />
+            Gym
+          </Typography>
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
