@@ -33,39 +33,57 @@ function Login() {
       password: password,
     };
 
-    try {
-      const response = await fetch("http://localhost:3001/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        const avatarURL = result.avatarURL; // non funziona
-        localStorage.setItem('avatarURL', avatarURL);
-        
-        localStorage.setItem("authToken", result.accessToken);
-        localStorage.setItem("isAuth", true);
-        console.log(result.accessToken);
-        dispatch(loginU(result.token));
-        setMessage("Login effettuato con successo!");
-        setSeverity("success");
-        setOpen(true);
-        setTimeout(() => {
-          navigate("/esercizi"); // Redirige alla pagina exercise dopo 2 secondi
-        }, 2000);
-      } else {
-        setMessage("Credenziali non valide. Riprova.");
-        setSeverity("error");
-        setOpen(true);
+    const response = await fetch("http://localhost:3001/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    
+    const result = await response.json();
+    
+    if (response.ok) {
+      const avatarURL = result.avatarURL; // If avatarURL is included in the response
+      localStorage.setItem('avatarURL', avatarURL);  // Store avatarURL in localStorage
+    
+      // Store the token and user auth state
+      localStorage.setItem("authToken", result.accessToken);
+      localStorage.setItem("isAuth", true);
+    
+      // Dispatch login action (if you're using Redux)
+      dispatch(loginU(result.token));
+    
+      setMessage("Login effettuato con successo!");
+      setSeverity("success");
+      setOpen(true);
+    
+      // Fetch user details to get the avatar URL
+      try {
+        const userResponse = await fetch("http://localhost:3001/user/me", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${result.accessToken}`,  // Pass the token to authenticate
+          },
+        });
+    
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          const avatarURL = userData.avatarURL;  // Assuming avatarURL is returned
+          localStorage.setItem('avatarURL', avatarURL);  // Save avatar URL to localStorage
+        } else {
+          console.error("Unable to fetch user data for avatar");
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
       }
-    } catch (error) {
-      console.error("Errore nella connessione:", error);
-      setMessage("Errore nella connessione. Riprova.");
+    
+      // Redirect to exercises page after 2 seconds
+      setTimeout(() => {
+        navigate("/esercizi");
+      }, 2000);
+    } else {
+      setMessage("Credenziali non valide. Riprova.");
       setSeverity("error");
       setOpen(true);
     }

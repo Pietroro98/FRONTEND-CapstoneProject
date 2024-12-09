@@ -60,7 +60,7 @@ function ExerciseNavbar() {
         case "Logout":
       localStorage.removeItem("avatarURL");
       localStorage.removeItem("authToken");
-      navigate("/");
+      navigate("/esercizi");
       break;
       default:
         break;
