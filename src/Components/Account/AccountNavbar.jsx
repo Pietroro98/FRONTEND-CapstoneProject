@@ -16,18 +16,15 @@ import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate} from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutU } from "../../redux/reducers/authSlice";
-import { Snackbar, Alert } from "@mui/material";
+
 const pages = [
-  "Crea Scheda",
-  "Aggiungi Esercizio alla scheda",
-  "Schede utenti",
-  "Crea esercizio",
-  "Upload Avatar"
+  "HomePage",
+
 ];
 
-const settings = ["HomePage", "Account", "Login", "Logout"];
+const settings = ["Login", "Logout"];
 
-function BackofficeNavbar({ onPageChange }) {
+function AccountNavbar({ onPageChange }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const avatarURL = localStorage.getItem("avatarURL");
@@ -35,9 +32,9 @@ function BackofficeNavbar({ onPageChange }) {
   const dispatch = useDispatch();
 
   // snakbar
-  const [open, setOpen] = React.useState(false);
-  const [message, setMessage] = React.useState("");
-  const [severity, setSeverity] = React.useState("");
+  const [setOpen] = React.useState(false);
+  const [setMessage] = React.useState("");
+  const [setSeverity] = React.useState("");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -78,7 +75,7 @@ function BackofficeNavbar({ onPageChange }) {
     } else if (page === "Logout") {
       handleLogout();
     } else if (page === "Account"){
-        navigate("/account")
+        navigate("/account");
     }else if (page === "HomePage") {
       navigate("/esercizi");
     } else {
@@ -88,7 +85,6 @@ function BackofficeNavbar({ onPageChange }) {
   };
 
   return (
-    <>
     <AppBar
     position="fixed"
     sx={{
@@ -244,22 +240,7 @@ function BackofficeNavbar({ onPageChange }) {
       </Toolbar>
     </Container>
   </AppBar>
-  {/* Snackbar per il messaggio di logout */}
-  <Snackbar
-      open={open}
-      autoHideDuration={6000}
-      onClose={() => setOpen(false)}
-      anchorOrigin={{vertical: "top", horizontal: "center" }}
-    >
-      <Alert onClose={() => setOpen(false)} variant="filled" severity={severity} sx={{
-         width: "100%"
-         , backgroundColor: "#763abb",
-         color: "#ffffff"}}>
-        {message}
-      </Alert>
-    </Snackbar>
-  </>
   );
 }
 
-export default BackofficeNavbar;
+export default AccountNavbar;

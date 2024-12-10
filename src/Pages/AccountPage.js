@@ -1,8 +1,7 @@
 import "../App.css";
 import { useEffect } from "react";
 import Account from "../Components/Account/Account";
-import ExerciseNavbar from "../Components/ExerciseComponent/ExerciseNavbar";
-
+import AccountNavbar from "../Components/Account/AccountNavbar";
 
 function AccountPage() {
   useEffect(() => {
@@ -11,7 +10,7 @@ function AccountPage() {
   
   return (
     <div className="App ">
-        <ExerciseNavbar/>
+        <AccountNavbar/>
         <Account/>
     </div>
   );

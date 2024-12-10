@@ -1,0 +1,12 @@
+.account-container {
+    margin-top: 6rem;
+  }
+  .name-purple {
+    color: var(--primary-color);
+  }
+
+  .card {
+    background-color: transparent;
+    border: none;
+    border-radius: 15px;
+  }
