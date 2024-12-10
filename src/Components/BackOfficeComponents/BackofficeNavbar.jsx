@@ -13,7 +13,9 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logoutU } from "../../redux/reducers/authSlice";
 
 const pages = [
   "Crea Scheda",
@@ -30,6 +32,12 @@ function BackofficeNavbar({ onPageChange }) {
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const avatarURL = localStorage.getItem("avatarURL");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  // snakbar
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState("");
+  const [severity, setSeverity] = React.useState("");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -47,8 +55,29 @@ function BackofficeNavbar({ onPageChange }) {
     setAnchorElUser(null);
   };
 
+ // Logout
+  const handleLogout = () => {
+    localStorage.removeItem("avatarURL");
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("isAuth");
+
+    dispatch(logoutU());
+
+    setMessage("Logout effettuato con successo!");
+    setSeverity("success");
+    setOpen(true);
+    setTimeout(() => {
+      navigate("/register");
+    }, 1500);
+  };
+
+ //navigazione navbar con pagine
   const handleNavigate = (page) => {
-    if (page === "HomePage") {
+    if (page === "Login") {
+        navigate("/login");
+    } else if (page === "Logout") {
+      handleLogout();
+    } else if (page === "HomePage") {
       navigate("/esercizi");
     } else {
       onPageChange(page);
