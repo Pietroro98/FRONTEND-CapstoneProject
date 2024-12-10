@@ -64,6 +64,9 @@ function ExerciseNavbar() {
       case "BackOffice":
         navigate("/backoffice");
         break;
+        case "Account":
+        navigate("/account");
+        break;
         case "Login":
         navigate("/login");
         break;

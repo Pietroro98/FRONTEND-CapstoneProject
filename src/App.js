@@ -7,6 +7,7 @@ import ExercisePage from "./Pages/ExercisePage";
 import WorkoutPlanPage from "./Pages/WorkoutPlanPage";
 import BackOfficePage from "./Pages/BackOfficePage";
 import CalcolatorePage from "./Pages/CalcolatorePgae";
+import AccountPage from "./Pages/AccountPage";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/scheda-allenamento" element={<WorkoutPlanPage />} />
           <Route path="/backoffice" element={<BackOfficePage />}/>
           <Route path="/calcolatore" element={<CalcolatorePage />}/>
+          <Route path="/account" element={<AccountPage />}/>
         </Routes>
     </div>
     </Router>
