@@ -42,7 +42,7 @@ const Account = () => {
       });
   }, []);
 
-  // Gestisci il caso in cui i dati non siano ancora stati caricati
+  // Gestisco il caso in cui i dati non siano ancora stati caricati
   if (loading) {
     return (
       <div className="text-center mt-5">
@@ -52,7 +52,7 @@ const Account = () => {
     );
   }
 
-  // Gestisci gli errori
+  // Gestisco gli errori
   if (error) {
     return (
       <div className="text-center mt-5">
@@ -63,7 +63,7 @@ const Account = () => {
     );
   }
 
-  // Se l'utente non è trovato
+  // Se l'utente non è trovato altro errore
   if (!user) {
     return (
       <div className="text-center mt-5">
@@ -78,11 +78,11 @@ const Account = () => {
       {/* Animazione del nome */}
       <div className="text-center">
         <motion.h1
-          initial={{ opacity: 0, y: -50 }}
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <span className="name-white">{user.name}</span> <span className="name-purple">{user.surname}</span>
+          <span >{user.name}</span> <span className="name-purple">{user.surname}</span>
         </motion.h1>
       </div>
 
@@ -103,8 +103,14 @@ const Account = () => {
                 />
               </div>
               <ListGroup className="mt-3">
-                <ListGroup.Item>
+                <ListGroup.Item >
                   <strong>Username:</strong> {user.username}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Nome:</strong> {user.name}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Cognome:</strong> {user.surname}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Email:</strong> {user.email}

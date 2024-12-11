@@ -1,12 +1,37 @@
 .account-container {
-    margin-top: 6rem;
-  }
-  .name-purple {
-    color: var(--primary-color);
-  }
+  margin-top: 6%;
+}
+.name-purple {
+  color: var(--primary-color);
+}
 
-  .card {
-    background-color: transparent;
-    border: none;
-    border-radius: 15px;
+.card {
+  background-color: transparent;
+  border: none;
+  border-radius: 15px;
+  background: linear-gradient(140deg, #2b0d44, #141414b0);
+  margin-top: 5%;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+h4 {
+  color: white !important;
+}
+
+@media screen and (min-width: 576px) and (max-width: 1200px) {
+  .account-container {
+    margin-top: 11%;
   }
+}
+
+@media screen and (min-width: 300px) and (max-width: 575px) {
+  .account-container {
+    margin-top: 18%;
+  }
+}
