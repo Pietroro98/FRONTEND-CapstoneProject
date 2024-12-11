@@ -14,9 +14,13 @@ import {
   MenuItem,
   IconButton,
   TextField,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "./WorkoutPlanDetails.css";
 import { Snackbar, Alert } from "@mui/material";
 
@@ -29,16 +33,22 @@ const WorkoutPlanDetails = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [editingExercise, setEditingExercise] = useState(null);
 
-   // Gestione dello stato per il Snackbar
-   const [open, setOpen] = useState(false);
-   const [message, setMessage] = useState("");
-   const [severity, setSeverity] = useState("success");
+  // Gestione dello stato per il Snackbar
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
+
+  // Stato per il Dialog di eliminazione
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [selectedPlanIdForDelete, setSelectedPlanIdForDelete] = useState(null);
 
   // Recupera la lista degli utenti
   const fetchUsers = async () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
+      setErrorMessage(
+        "Token di autenticazione mancante. Assicurati di essere loggato."
+      );
       return;
     }
 
@@ -67,7 +77,9 @@ const WorkoutPlanDetails = () => {
   const fetchWorkoutPlans = async (userId) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
+      setErrorMessage(
+        "Token di autenticazione mancante. Assicurati di essere loggato."
+      );
       return;
     }
 
@@ -101,18 +113,23 @@ const WorkoutPlanDetails = () => {
   const fetchExercisesForAllPlans = async (plans) => {
     const token = localStorage.getItem("authToken");
     if (!token) {
-      setErrorMessage("Token di autenticazione mancante. Assicurati di essere loggato.");
+      setErrorMessage(
+        "Token di autenticazione mancante. Assicurati di essere loggato."
+      );
       return;
     }
 
     try {
       const requests = plans.map((plan) =>
-        fetch(`http://localhost:3001/exercise_workout/workout_plan/${plan.id}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }).then((response) => response.json())
+        fetch(
+          `http://localhost:3001/exercise_workout/workout_plan/${plan.id}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        ).then((response) => response.json())
       );
 
       const responses = await Promise.all(requests);
@@ -224,6 +241,48 @@ const WorkoutPlanDetails = () => {
     setEditingExercise((prev) => ({ ...prev, [name]: value })); // Modifica il valore dell'esercizio in editing
   };
 
+  // Funzione per eliminare la scheda
+  const handleDeleteWorkoutPlan = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token || !selectedPlanIdForDelete) {
+      setErrorMessage("Errore durante l'eliminazione della scheda.");
+      setOpen(true);
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:3001/workout_plans/${selectedPlanIdForDelete}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        // Rimuovi la scheda eliminata dallo stato
+        setWorkoutPlans((prevPlans) =>
+          prevPlans.filter((plan) => plan.id !== selectedPlanIdForDelete)
+        );
+        setMessage("Scheda eliminata con successo!");
+        setSeverity("success");
+      } else {
+        setErrorMessage("Errore nell'eliminazione della scheda.");
+        setSeverity("error");
+      }
+      setOpen(true);
+      setOpenDeleteDialog(false);
+    } catch (error) {
+      console.error("Errore nell'eliminazione:", error);
+      setErrorMessage("Errore nell'eliminazione della scheda.");
+      setSeverity("error");
+      setOpen(true);
+      setOpenDeleteDialog(false);
+    }
+  };
+
   // Carica gli utenti al montaggio del componente
   useEffect(() => {
     fetchUsers();
@@ -262,7 +321,17 @@ const WorkoutPlanDetails = () => {
       ) : (
         workoutPlans.map((plan) => (
           <div key={plan.id} className="workout-plan-section">
-            <h3>{plan.nome_scheda}</h3>
+            <h3>
+              {plan.nome_scheda}
+              <IconButton
+                onClick={() => {
+                  setSelectedPlanIdForDelete(plan.id);
+                  setOpenDeleteDialog(true);
+                }}
+              >
+                <FontAwesomeIcon icon={faTrash} className="faTrash" />
+              </IconButton>
+            </h3>
             <TableContainer component={Paper} className="table-container">
               <Table>
                 <TableHead>
@@ -341,29 +410,63 @@ const WorkoutPlanDetails = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-             <Snackbar
-              open={open}
-              autoHideDuration={6000}
-              onClose={() => setOpen(false)}
-              anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            >
-              <Alert
-                onClose={() => setOpen(false)}
-                severity={severity}
-                variant="filled"
-                sx={{
-                  width: "100%",
-                  backgroundColor: "#763abb",
-                  color: "#ffffff",
-                }}
-              >
-                {message}
-              </Alert>
-            </Snackbar>
           </div>
-          
         ))
       )}
+
+      {/* Dialog di conferma eliminazione */}
+      <Dialog
+        open={openDeleteDialog}
+        onClose={() => setOpenDeleteDialog(false)}
+        sx={{
+          "& .MuiDialog-paper": {
+            backgroundColor: "#000000",
+            borderRadius: "8px",
+            padding: "20px",
+          },
+        }}
+      >
+        <DialogTitle sx={{ color: "var(--primary-color)", fontWeight: "bold" }}>
+          Sei sicuro di eliminare la scheda?
+        </DialogTitle>
+        <DialogContent>
+          <p>Questa azione è irreversibile e non può essere annullata.</p>
+        </DialogContent>
+        <DialogActions>
+          <button
+            onClick={() => setOpenDeleteDialog(false)}
+            className="button-annulla"
+          >
+            Annulla
+          </button>
+          <button
+            onClick={handleDeleteWorkoutPlan}
+           className="button-elimina"
+          >
+            Elimina
+          </button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={severity}
+          variant="filled"
+          sx={{
+            width: "100%",
+            backgroundColor: "#763abb",
+            color: "#ffffff",
+          }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
