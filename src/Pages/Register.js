@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 // import { loginU } from "../redux/reducers/authSlice";
 import "./Login/Login.css";
 import { motion } from "framer-motion";
@@ -8,7 +8,7 @@ import { Form, Button, Container } from "react-bootstrap";
 import { Snackbar, Alert } from "@mui/material";
 
 function Register() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // GestioneSnackbar
@@ -49,6 +49,7 @@ function Register() {
       });
 
       const result = await response.json();
+      console.log(result);
 
       if (response.ok) {
         //dispatch(loginU(result));
