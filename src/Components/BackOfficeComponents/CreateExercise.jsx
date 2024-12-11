@@ -105,7 +105,7 @@ function CreateExercise() {
 
   return (
     <Container sx={{ mt: 4 }}>
-      <Typography variant="h3" align="center" sx={{ mt: 15, mb: 5 }}>
+      <Typography variant="h4" align="center" sx={{ mt: 15, mb: 5 }}>
         Crea un Nuovo Esercizio
       </Typography>
 

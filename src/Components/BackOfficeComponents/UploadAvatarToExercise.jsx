@@ -108,7 +108,7 @@ function UploadAvatarToExercise() {
 
   return (
     <Container sx={{ mt: 15 }} className="form-container">
-      <Typography variant="h3" align="center" sx={{ mt: 5, mb: 5 }}>
+      <Typography variant="h4" align="center" sx={{ mt: 5, mb: 5 }}>
         Carica Avatar per un Esercizio
       </Typography>
 

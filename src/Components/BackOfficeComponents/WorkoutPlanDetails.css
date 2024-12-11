@@ -5,7 +5,7 @@
     justify-content: center;
     padding: 20px;
     min-height: 100vh;
-    margin-top: 70px;
+    margin-top: 1%;
   }
   
   .workout-plan-details-container-2 {
@@ -13,7 +13,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 5%;
+    margin-top: 10%;
     
   }
   /* Titolo principale della pagina */

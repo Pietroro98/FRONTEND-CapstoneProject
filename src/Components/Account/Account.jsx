@@ -89,7 +89,7 @@ const Account = () => {
       {/* Card con le informazioni */}
       <Row className="justify-content-center">
         <Col md={6} sm={12}>
-          <Card>
+          <Card className='card-account'>
             <Card.Header>
               <h4>Informazioni Profilo</h4>
             </Card.Header>
