@@ -113,6 +113,7 @@ const MyWorkoutPlan = () => {
     fetchWorkoutPlans();
   }, []);
 
+   // Funzione per iniziare la modifica di un esercizio
   const handleEdit = (exerciseId, exerciseData) => {
     setEditingExercise({
       ...exerciseData,
@@ -121,6 +122,7 @@ const MyWorkoutPlan = () => {
     });
   };
 
+  // Funzione per salvare l'esercizio modificato tramite PUT
   const handleSave = async (exerciseId) => {
     if (!editingExercise) {
       setErrorMessage("Non ci sono modifiche da salvare.");
@@ -188,7 +190,7 @@ const MyWorkoutPlan = () => {
       setEditingExercise(null);
     }
   };
-
+// Gestione del cambio dei valori nei campi di modifica
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditingExercise((prev) => ({ ...prev, [name]: value }));
