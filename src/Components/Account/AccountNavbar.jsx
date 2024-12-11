@@ -62,7 +62,7 @@ function AccountNavbar({ onPageChange }) {
     setSeverity("success");
     setOpen(true);
     setTimeout(() => {
-      navigate("/login");
+      navigate("/#");
     }, 1500);
   };
 
