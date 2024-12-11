@@ -6,7 +6,7 @@ import Register from "./Pages/Register";
 import ExercisePage from "./Pages/ExercisePage";
 import WorkoutPlanPage from "./Pages/WorkoutPlanPage";
 import BackOfficePage from "./Pages/BackOfficePage";
-import CalcolatorePage from "./Pages/CalcolatorePgae";
+// import CalcolatorePage from "./Pages/CalcolatorePgae";
 import AccountPage from "./Pages/AccountPage";
 
 

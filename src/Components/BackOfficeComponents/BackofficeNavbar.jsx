@@ -100,25 +100,27 @@ function BackofficeNavbar({ onPageChange }) {
   >
     <Container maxWidth="xl">
       <Toolbar disableGutters>
-        <Typography
-          variant="h6"
-          noWrap
-          sx={{
-            mr: 2,
-            display: { xs: "none", md: "flex" },
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
-          }}
-        >
-          <FontAwesomeIcon
-            className="me-2"
-            icon={faDumbbell}
-            size="xl"
-            style={{ color: "#763abb" }}
-          />
+      <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/esercizi"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            <FontAwesomeIcon
+              className="me-2"
+              icon={faDumbbell}
+              size="xl"
+              style={{ color: "#763abb" }}
+            />
         </Typography>
 
         <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
