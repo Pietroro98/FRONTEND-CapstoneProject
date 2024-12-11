@@ -1,9 +1,17 @@
 import React from "react";
 import { motion } from "framer-motion";
 import img2 from "../../Assets/Imgs/img2.jpg";
-import NavbarButton from "../Buttons/NavbarButton";
+import { useNavigate } from "react-router-dom";
+import "./About.css";
 
 function AboutSection() {
+
+  const navigate = useNavigate();
+  const handleGetStarted = () => {
+    navigate('/login');
+  };
+
+
   return (
     <div className="bg-black text-light py-4 py-sm-5" id="about">
       <div className="container">
@@ -41,7 +49,12 @@ function AboutSection() {
               muoviti e dimostra a te stesso che puoi essere in forma e forte.
               Sempre. 💪✨
             </p>
-            <NavbarButton btnTitle="Inizia subito" />
+            <div>
+                <button className="inizia-subito btn btn-light btn-lg rounded-3 text-capitalize"
+                 onClick={handleGetStarted}>
+                    Inizia Subito
+                </button>
+            </div>
           </motion.div>
         </div>
       </div>
