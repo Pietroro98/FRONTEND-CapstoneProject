@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Box,
   Typography,
   TextField,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
   Button,
   Card,
   CardMedia,
@@ -18,11 +22,46 @@ import "./SearchExercise.css";
 
 function SearchExercise() {
   const [exercises, setExercises] = useState([]);
+  const [bodyParts, setBodyParts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [bodyPart, setBodyPart] = useState('');
   const [selectedExercise, setSelectedExercise] = useState(null); 
   const [error, setError] = useState(false);
 
+  // Fetch per ottenere le parti del corpo
+  useEffect(() => {
+    const fetchBodyParts = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        if (!token) {
+          setError("Non sei autenticato. Effettua il login.");
+          return;
+        }
+
+        const response = await fetch(`http://localhost:3001/body-parts`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setBodyParts(data);
+        } else {
+          setError("Errore durante il recupero delle parti del corpo.");
+        }
+      } catch (error) {
+        console.error("Errore nella connessione:", error);
+        setError("Errore di rete. Riprova più tardi.");
+      }
+    };
+
+    fetchBodyParts();
+  }, []);
+
+  //fetch per ottenere gli esercizi con paginazione anche in base alla parte del corpo cercata
   const fetchExercises = async () => {
     try {
       const token = localStorage.getItem('authToken');
@@ -55,24 +94,20 @@ function SearchExercise() {
     }
   };
 
- 
   const filteredExercises = exercises.filter((exercise) =>
     exercise.name.toLowerCase().includes(searchQuery.toLowerCase()) 
   );
 
- 
   const handleOpenDialog = (exercise) => {
     setSelectedExercise(exercise);
   };
 
- 
   const handleCloseDialog = () => {
     setSelectedExercise(null);
   };
 
   return (
     <Container sx={{ mt: '100px' }}>
-      {/* Sezione di ricerca */}
       <Box sx={{ textAlign: 'center', my: 4 }}>
         <Typography
           variant="h3"
@@ -100,14 +135,21 @@ function SearchExercise() {
           mt: 4,
         }}
       >
-        <TextField
-          label="Inserisci la parte del corpo (es. Spalle)"
-          variant="outlined"
-          fullWidth
-          sx={{ maxWidth: 600 }}
-          value={bodyPart}
-          onChange={(e) => setBodyPart(e.target.value)} 
-        />
+        <FormControl fullWidth sx={{ maxWidth: 600 }}>
+          <InputLabel id="body-part-label">Seleziona la parte del corpo</InputLabel>
+          <Select
+            labelId="body-part-label"
+            value={bodyPart}
+            onChange={(e) => setBodyPart(e.target.value)}
+            label="Seleziona la parte del corpo"
+          >
+            {bodyParts.map((part) => (
+              <MenuItem key={part.id} value={part.nome}>
+                {part.nome}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
 
       {/* Sezione di input per il nome dell'esercizio */}
@@ -132,8 +174,7 @@ function SearchExercise() {
         />
       </Box>
 
-      {/* Pulsante per avviare la ricerca */}
-      <Box sx={{ textAlign: 'center', mt: 4}}>
+      <Box sx={{ textAlign: 'center', mt: 4 }}>
         <Button
           variant="contained"
           color="primary"
@@ -165,7 +206,6 @@ function SearchExercise() {
               height="300"
               image={exercise.avatar}
               alt={exercise.name}
-              
             />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
