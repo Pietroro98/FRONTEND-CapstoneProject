@@ -40,7 +40,8 @@ const WorkoutPlanDetails = () => {
 
   // Stato per il Dialog di eliminazione
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [selectedPlanIdForDelete, setSelectedPlanIdForDelete] = useState(null);
+  const [selectedPlanIdForDelete, setSelectedPlanIdForDelete] = useState(null);// eliminazione schedaAllenamentoById
+  // const [selectedExerciseIdForDelete, setSelectedExerciseIdForDelete] = useState(null); // eliminazione esercizioById
 
   // Recupera la lista degli utenti
   const fetchUsers = async () => {
@@ -282,6 +283,61 @@ const WorkoutPlanDetails = () => {
       setOpenDeleteDialog(false);
     }
   };
+  
+  //  // Funzione per eliminare l'esercizio
+  //  const handleDeleteExercise = async () => {
+  //   if (!selectedExerciseIdForDelete) {
+  //     setErrorMessage("Non è stato selezionato alcun esercizio da eliminare.");
+  //     setMessage("Non è stato selezionato alcun esercizio da eliminare.");
+  //     setSeverity("error");
+  //     setOpen(true);
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:3001/exercise_workout/${selectedExerciseIdForDelete}`,
+  //       {
+  //         method: "DELETE",
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+  //         },
+  //       }
+  //     );
+
+  //     const data = await response.json();
+  //     if (response.ok) {
+  //       setErrorMessage("");
+  //       setMessage("Esercizio eliminato con successo!");
+  //       setSeverity("success");
+  //       setOpen(true);
+
+  //       // Rimuovi l'esercizio eliminato dalla lista degli esercizi locali
+  //       const updatedExercises = exercisesByPlan[editingExercise.planId].filter(
+  //         (exercise) => exercise.id !== selectedExerciseIdForDelete
+  //       );
+
+  //       const updatedExercisesByPlan = {
+  //         ...exercisesByPlan,
+  //         [editingExercise.planId]: updatedExercises, // Aggiorna gli esercizi per la scheda
+  //       };
+  //       setExercisesByPlan(updatedExercisesByPlan); // Imposta gli esercizi aggiornati
+  //     } else {
+  //       setErrorMessage(data.message || "Errore nell'eliminazione.");
+  //       setMessage(data.message || "Errore nell'eliminazione.");
+  //       setSeverity("error");
+  //       setOpen(true);
+  //     }
+  //   } catch (error) {
+  //     console.error("Errore nell'eliminazione:", error);
+  //     setErrorMessage("Errore nell'eliminazione.");
+  //     setMessage("Errore nell'eliminazione.");
+  //     setSeverity("error");
+  //     setOpen(true);
+  //   } finally {
+  //     setSelectedExerciseIdForDelete(null); // Resetta lo stato di eliminazione dell'esercizio
+  //   }
+  // };
 
   // Carica gli utenti al montaggio del componente
   useEffect(() => {
@@ -414,7 +470,7 @@ const WorkoutPlanDetails = () => {
         ))
       )}
 
-      {/* Dialog di conferma eliminazione */}
+      {/* Dialog per l'eliminazione della scheda allenamento */}
       <Dialog
         open={openDeleteDialog}
         onClose={() => setOpenDeleteDialog(false)}
@@ -439,10 +495,7 @@ const WorkoutPlanDetails = () => {
           >
             Annulla
           </button>
-          <button
-            onClick={handleDeleteWorkoutPlan}
-           className="button-elimina"
-          >
+          <button onClick={handleDeleteWorkoutPlan} className="button-elimina">
             Elimina
           </button>
         </DialogActions>
