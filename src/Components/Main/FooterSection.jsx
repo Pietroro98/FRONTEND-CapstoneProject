@@ -49,7 +49,7 @@ function FooterSection() {
               <FontAwesomeIcon icon={faEnvelope} className="me-2" />
               pietroro98@gmail.com
             </p>
-            <a href="/#" className="mx-2 text-decoration-none h5">
+            <a href="/#" className="Footer-color mx-2 text-decoration-none h5">
               <FontAwesomeIcon  icon={faArrowUp} className="me-2" />
               Torna su 
             </a>
