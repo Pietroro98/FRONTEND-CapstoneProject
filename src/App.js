@@ -21,7 +21,7 @@ function App() {
           <Route path="/esercizi" element={<ExercisePage />} />
           <Route path="/scheda-allenamento" element={<WorkoutPlanPage />} />
           <Route path="/backoffice" element={<BackOfficePage />}/>
-          <Route path="/calcolatore" element={<CalcolatorePage />}/>
+          {/* <Route path="/calcolatore" element={<CalcolatorePage />}/> */}
           <Route path="/account" element={<AccountPage />}/>
         </Routes>
     </div>

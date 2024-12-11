@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { logoutU } from "../../redux/reducers/authSlice";
 
 
-const pages = ["Esercizi", "Scheda Allenamento", "Calcolatore"];
+const pages = ["Esercizi", "Scheda Allenamento"];
 const settings = ["BackOffice", "Account", "Login", "Logout"];
 
 function ExerciseNavbar() {
