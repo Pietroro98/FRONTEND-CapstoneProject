@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Card, ListGroup, Image, Spinner, Alert, Container, Row, Col } from 'react-bootstrap';
+import { ListGroup, Image, Spinner, Alert, Container } from 'react-bootstrap';
 import './Account.css';
 
 const Account = () => {
-  // Stati per i dati dell'utente e il caricamento
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Effetto per fare la fetch dei dati dall'API
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (!token) {
@@ -17,7 +15,6 @@ const Account = () => {
       return;
     }
 
-    // Effettua la fetch con il token
     fetch('http://localhost:3001/user/me', {
       method: 'GET',
       headers: {
@@ -42,7 +39,6 @@ const Account = () => {
       });
   }, []);
 
-  // Gestisco il caso in cui i dati non siano ancora stati caricati
   if (loading) {
     return (
       <div className="text-center mt-5">
@@ -52,7 +48,6 @@ const Account = () => {
     );
   }
 
-  // Gestisco gli errori
   if (error) {
     return (
       <div className="text-center mt-5">
@@ -63,7 +58,6 @@ const Account = () => {
     );
   }
 
-  // Se l'utente non è trovato altro errore
   if (!user) {
     return (
       <div className="text-center mt-5">
@@ -73,55 +67,47 @@ const Account = () => {
   }
 
   return (
-    <div className='img'>
-    <Container className="account-container">
-      {/* Animazione del nome */}
-      <div className="text-center">
-        <motion.h1
+    <header className="account-header">
+      <Container className="d-flex justify-content-center align-items-center min-vh-100">
+        <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
+          className="account-info p-4 rounded text-light"
         >
-          <span >{user.name}</span> <span className="name-purple">{user.surname}</span>
-        </motion.h1>
-      </div>
-
-      {/* Card con le informazioni */}
-      <Row className="justify-content-center">
-        <Col md={6} sm={12}>
-          <Card className='card-account'>
-            <Card.Header>
-              <h4>Informazioni Profilo</h4>
-            </Card.Header>
-            <Card.Body>
-              <div className="text-center">
-                {/* Avatar */}
-                <Image
-                  src={user.avatarURL}
-                  alt={`${user.name} ${user.surname}`}
-                  className="avatar"
-                />
-              </div>
-              <ListGroup className="mt-3">
-                <ListGroup.Item >
-                  <strong>Username:</strong> {user.username}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <strong>Nome:</strong> {user.name}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <strong>Cognome:</strong> {user.surname}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <strong>Email:</strong> {user.email}
-                </ListGroup.Item>
-              </ListGroup>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
-    </div>
+          <div className="text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <span>{user.name}</span> <span className="name-purple">{user.surname}</span>
+            </motion.h1>
+          </div>
+          <div className="text-center mt-4">
+            <Image
+              src={user.avatarURL}
+              alt={`${user.name} ${user.surname}`}
+              className="avatar"
+            />
+          </div>
+          <ListGroup className="mt-4">
+            <ListGroup.Item className="bg-transparent border-light text-light">
+              <strong>Username:</strong> {user.username}
+            </ListGroup.Item>
+            <ListGroup.Item className="bg-transparent border-light text-light">
+              <strong>Nome:</strong> {user.name}
+            </ListGroup.Item>
+            <ListGroup.Item className="bg-transparent border-light text-light">
+              <strong>Cognome:</strong> {user.surname}
+            </ListGroup.Item>
+            <ListGroup.Item className="bg-transparent border-light text-light">
+              <strong>Email:</strong> {user.email}
+            </ListGroup.Item>
+          </ListGroup>
+        </motion.div>
+      </Container>
+    </header>
   );
 };
 

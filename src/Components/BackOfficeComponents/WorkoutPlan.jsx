@@ -223,11 +223,12 @@ const WorkoutPlan = () => {
         />
 
         <Button
+          size="small"
           variant="contained"
           color="primary"
           onClick={handleCreateWorkoutPlan}
-          className="create-button"
-          sx={{ marginBottom: 3 }}
+          sx={{ marginBottom: 3, backgroundColor: "#763abb" }}
+          
         >
           Crea Scheda
         </Button>

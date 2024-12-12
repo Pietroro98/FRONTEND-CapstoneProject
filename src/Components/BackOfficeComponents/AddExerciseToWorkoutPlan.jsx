@@ -275,7 +275,7 @@ const AddExerciseToWorkoutPlan = () => {
           variant="contained"
           color="primary"
           onClick={handleAddExerciseToWorkout}
-          className="add-exercise-button"
+          sx={{backgroundColor: "#763abb" }}
         >
           Aggiungi Esercizio
         </Button>

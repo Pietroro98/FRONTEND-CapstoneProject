@@ -1,37 +1,31 @@
-.account-container {
-  margin-top: 6%;
-}
-.name-purple {
-  color: var(--primary-color);
+.account-header {
+  background-image: url('../../Assets/Imgs/hero-img.jpg');
+  background-size: cover;
+  background-position: left;
 }
 
-.card-account {
-  background-color: transparent;
-  border: none;
-  border-radius: 15px;
-  background: linear-gradient(140deg, #2b0d44, #141414b0);
-  margin-top: 5%;
+.account-info {
+  max-width: 600px;
+  background: rgba(0, 0, 0, 0.7); /* Sfondo trasparente */
 }
 
 .avatar {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
 }
 
-h4 {
-  color: white !important;
+.name-purple {
+  color: #763abb;
 }
 
-@media screen and (min-width: 576px) and (max-width: 1200px) {
-  .account-container {
-    margin-top: 11%;
-  }
+.list-group-item {
+  font-size: 1rem;
 }
 
-@media screen and (min-width: 300px) and (max-width: 575px) {
-  .account-container {
-    margin-top: 18%;
+@media screen and (max-width: 1024px) {
+  .account-header {
+    background-position: center;
   }
 }

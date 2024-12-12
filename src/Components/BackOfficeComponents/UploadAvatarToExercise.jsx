@@ -164,7 +164,7 @@ function UploadAvatarToExercise() {
           variant="contained"
           color="primary"
           onClick={handleUploadAvatar}
-          sx={{ mt: 4 }}
+          sx={{ mt: 4,  backgroundColor: "#763abb" }}
         >
           Carica Avatar
         </Button>

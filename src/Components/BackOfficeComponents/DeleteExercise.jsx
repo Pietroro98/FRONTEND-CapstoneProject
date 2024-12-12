@@ -144,7 +144,7 @@ function DeleteExercise() {
             variant="contained"
             color="primary"
             onClick={handleDeleteExercise}
-            sx={{ mt: 4 }}
+            sx={{ mt: 4 ,backgroundColor: "#763abb"}}
           >
             Elimina Esercizio
           </Button>

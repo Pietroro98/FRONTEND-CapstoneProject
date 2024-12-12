@@ -20,7 +20,7 @@ function CreateExercise() {
   const [target, setTarget] = useState("");
   const [secondaryMuscles, setSecondaryMuscles] = useState("");
   const [instructions, setInstructions] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
+  // const [avatarUrl, setAvatarUrl] = useState("");
   const [bodyPartId, setBodyPartId] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -71,7 +71,7 @@ function CreateExercise() {
       target,
       secondaryMuscles,
       instructions,
-      avatarUrl,
+      // avatarUrl,
       bodyPartId: parseInt(bodyPartId),
     };
 
@@ -179,19 +179,19 @@ function CreateExercise() {
           value={instructions}
           onChange={(e) => setInstructions(e.target.value)}
         />
-        <TextField
+        {/* <TextField
           label="URL dell'avatar"
           variant="outlined"
           fullWidth
           value={avatarUrl}
           onChange={(e) => setAvatarUrl(e.target.value)}
-        />
+        /> */}
 
         <Button
           variant="contained"
           color="primary"
           onClick={handleCreateExercise}
-          sx={{ mt: 4 }}
+          sx={{backgroundColor: "#763abb", mt: 4 }}
         >
           Crea Esercizio
         </Button>
