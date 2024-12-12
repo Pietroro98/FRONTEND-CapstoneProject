@@ -22,6 +22,7 @@ const pages = [
   "Aggiungi Esercizio alla scheda",
   "Schede utenti",
   "Crea esercizio",
+  "Elimina esercizio",
   "Upload Avatar"
 ];
 
