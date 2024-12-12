@@ -15,6 +15,7 @@ import {
   FormControl,
 } from "@mui/material";
 import "./WorkoutPlan.css";
+import { Snackbar, Alert } from "@mui/material";
 
 const WorkoutPlan = () => {
   const [nomeScheda, setNomeScheda] = useState("");
@@ -25,6 +26,11 @@ const WorkoutPlan = () => {
   const [userList, setUserList] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState("");
   const [selectedViewUserId, setSelectedViewUserId] = useState("");
+
+ // Gestione dello stato per il Snackbar
+ const [open, setOpen] = useState(false);
+ const [message, setMessage] = useState("");
+ const [severity, setSeverity] = useState("success");
 
   // Recupera la lista degli utenti
   const fetchUsers = async () => {
@@ -93,6 +99,9 @@ const WorkoutPlan = () => {
       const data = await response.json();
       console.log("Server response:", data);
       if (response.ok) {
+        setMessage("Scheda di allenamento creata con successo!");
+        setSeverity("success");
+        setOpen(true);
         fetchWorkoutPlans(selectedUserId);
         setNomeScheda("");
         setDataCreazione("");
@@ -270,6 +279,25 @@ const WorkoutPlan = () => {
           </TableBody>
         </Table>
       </TableContainer>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={severity}
+          variant="filled"
+          sx={{
+            width: "100%",
+            backgroundColor: "#763abb",
+            color: "#ffffff",
+          }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

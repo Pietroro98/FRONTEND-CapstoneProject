@@ -8,6 +8,7 @@ import {
   FormControl,
 } from "@mui/material";
 import "./WorkoutPlan.css";
+import { Snackbar, Alert } from "@mui/material";
 
 const AddExerciseToWorkoutPlan = () => {
   const [users, setUsers] = useState([]);
@@ -21,9 +22,13 @@ const AddExerciseToWorkoutPlan = () => {
   const [pesoUsato, setPesoUsato] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Gestione dello stato per il Snackbar
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
 
-   // Recupera utenti per poi selezionarli
-   const fetchUsers = async () => {
+  // Recupera utenti per poi selezionarli
+  const fetchUsers = async () => {
     const token = localStorage.getItem("authToken");
     if (!token) {
       setErrorMessage(
@@ -100,21 +105,22 @@ const AddExerciseToWorkoutPlan = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3001/exercise?page=0&size=100", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "http://localhost:3001/exercise?page=0&size=100",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await response.json();
       if (response.ok && Array.isArray(data.content)) {
         setExercises(data.content);
         setErrorMessage("");
       } else {
-        setErrorMessage(
-          data.message || "Errore nel recupero degli esercizi."
-        );
+        setErrorMessage(data.message || "Errore nel recupero degli esercizi.");
       }
     } catch (error) {
       console.error("Errore nel recupero degli esercizi:", error);
@@ -152,13 +158,15 @@ const AddExerciseToWorkoutPlan = () => {
 
       const data = await response.json();
       if (response.ok) {
+        setMessage("Esercizio aggiunto con successo!");
+        setSeverity("success");
+        setOpen(true);
         setSelectedWorkoutPlan("");
         setSelectedExerciseId("");
         setRipetizioni("");
         setSerie("");
         setPesoUsato("");
         setErrorMessage("");
-        alert("Esercizio aggiunto con successo!");
       } else {
         setErrorMessage(
           data.message || "Errore nell'aggiunta dell'esercizio. Riprova."
@@ -272,6 +280,25 @@ const AddExerciseToWorkoutPlan = () => {
           Aggiungi Esercizio
         </Button>
       </div>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={severity}
+          variant="filled"
+          sx={{
+            width: "100%",
+            backgroundColor: "#763abb",
+            color: "#ffffff",
+          }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

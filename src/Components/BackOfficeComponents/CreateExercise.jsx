@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogActions,
 } from "@mui/material";
+import { Snackbar, Alert } from "@mui/material";
 
 
 function CreateExercise() {
@@ -27,6 +28,11 @@ function CreateExercise() {
   const [bodyPartId, setBodyPartId] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+
+  // Gestione dello stato per il Snackbar
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
   
 
   useEffect(() => {
@@ -90,6 +96,9 @@ function CreateExercise() {
       });
 
       if (response.ok) {
+        setMessage("Esercizio aggiunto con successo!");
+        setSeverity("success");
+        setOpen(true);
         setSuccess(true);
       } else {
         const errorData = await response.json();
@@ -104,6 +113,7 @@ function CreateExercise() {
   };
 
   return (
+    <>
     <Container sx={{ mt: 4 }}>
       <Typography variant="h4" align="center" sx={{ mt: 15, mb: 5 }}>
         Crea un Nuovo Esercizio
@@ -204,6 +214,26 @@ function CreateExercise() {
         </DialogActions>
       </Dialog>
     </Container>
+    <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={severity}
+          variant="filled"
+          sx={{
+            width: "100%",
+            backgroundColor: "#763abb",
+            color: "#ffffff",
+          }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
 

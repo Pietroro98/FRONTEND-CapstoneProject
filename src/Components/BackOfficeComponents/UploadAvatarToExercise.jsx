@@ -9,12 +9,9 @@ import {
   InputLabel,
   FormControl,
   TextField,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
 } from "@mui/material";
 import "./WorkoutPlan.css";
+import { Snackbar, Alert } from "@mui/material";
 
 function UploadAvatarToExercise() {
   const [exercises, setExercises] = useState([]);
@@ -22,6 +19,11 @@ function UploadAvatarToExercise() {
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+
+  // Gestione dello stato per il Snackbar
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [severity, setSeverity] = useState("success");
 
   useEffect(() => {
     const fetchExercises = async () => {
@@ -95,6 +97,9 @@ function UploadAvatarToExercise() {
       if (response.ok) {
         const data = await response.text();
         console.log("Avatar caricato:", data);
+        setMessage("Avatar caricatocon successo!");
+        setSeverity("success");
+        setOpen(true);
         setSuccess(true);
       } else {
         const errorData = await response.json();
@@ -107,6 +112,7 @@ function UploadAvatarToExercise() {
   };
 
   return (
+    <>
     <Container sx={{ mt: 15 }} className="form-container">
       <Typography variant="h4" align="center" sx={{ mt: 5, mb: 5 }}>
         Carica Avatar per un Esercizio
@@ -164,19 +170,28 @@ function UploadAvatarToExercise() {
         </Button>
       </Box>
 
-      {/* Success Dialog */}
-      <Dialog open={success} onClose={() => setSuccess(false)}>
-        <DialogTitle>Successo!</DialogTitle>
-        <DialogContent>
-          <Typography>Avatar caricato con successo!</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setSuccess(false)} color="primary">
-            Chiudi
-          </Button>
-        </DialogActions>
-      </Dialog>
+      {/* snakbar */}
     </Container>
+    <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity={severity}
+          variant="filled"
+          sx={{
+            width: "100%",
+            backgroundColor: "#763abb",
+            color: "#ffffff",
+          }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
+    </>
   );
 }
 
