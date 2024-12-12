@@ -9,10 +9,6 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
 } from "@mui/material";
 import { Snackbar, Alert } from "@mui/material";
 
@@ -201,18 +197,6 @@ function CreateExercise() {
         </Button>
       </Box>
 
-      {/* Success Dialog */}
-      <Dialog open={success} onClose={() => setSuccess(false)}>
-        <DialogTitle>Successo!</DialogTitle>
-        <DialogContent>
-          <Typography>Esercizio creato con successo!</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setSuccess(false)} color="primary">
-            Chiudi
-          </Button>
-        </DialogActions>
-      </Dialog>
     </Container>
     <Snackbar
         open={open}

@@ -360,7 +360,7 @@ const WorkoutPlanDetails = () => {
         >
           {users.map((user) => (
             <MenuItem key={user.id} value={user.id}>
-              {user.name} {user.surname}
+              {user.username} {/*{user.surname} */}
             </MenuItem>
           ))}
         </Select>
