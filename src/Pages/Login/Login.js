@@ -9,8 +9,6 @@ import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 import { Form, Button, Container } from "react-bootstrap";
 import { Snackbar, Alert } from "@mui/material";
 
-
-
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,44 +38,44 @@ function Login() {
       },
       body: JSON.stringify(userData),
     });
-    
+
     const result = await response.json();
-    
+    console.log("Login result:", result);
+
     if (response.ok) {
-      const avatarURL = result.avatarURL; // If avatarURL is included in the response
-      localStorage.setItem('avatarURL', avatarURL);  // Store avatarURL in localStorage
-    
-      // Store the token and user auth state
+      const avatarURL = result.avatarURL;
+      localStorage.setItem("avatarURL", avatarURL);
+
       localStorage.setItem("authToken", result.accessToken);
       localStorage.setItem("isAuth", true);
-    
-      // Dispatch login action (if you're using Redux)
-      dispatch(loginU(result.token));
-    
+
       setMessage("Login effettuato con successo!");
       setSeverity("success");
       setOpen(true);
-    
+
       // Fetch user details to get the avatar URL
       try {
         const userResponse = await fetch("http://localhost:3001/user/me", {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${result.accessToken}`,  // Pass the token to authenticate
+            Authorization: `Bearer ${result.accessToken}`,
           },
         });
-    
+
         if (userResponse.ok) {
           const userData = await userResponse.json();
-          const avatarURL = userData.avatarURL;  // Assuming avatarURL is returned
-          localStorage.setItem('avatarURL', avatarURL);  // Save avatar URL to localStorage
+          console.log("User data:", userData);
+          const avatarURL = userData.avatarURL;
+          localStorage.setItem("avatarURL", avatarURL);
+          localStorage.setItem("role", userData.role); // Aggiungi un controllo temporaneo
+          dispatch(loginU({ token: result.accessToken, role: userData.role }));
         } else {
           console.error("Unable to fetch user data for avatar");
         }
       } catch (error) {
         console.error("Error fetching user details:", error);
       }
-    
+
       // Redirect to exercises page after 2 seconds
       setTimeout(() => {
         navigate("/esercizi");
@@ -205,13 +203,13 @@ function Login() {
         open={open}
         autoHideDuration={6000}
         onClose={() => setOpen(false)}
-        anchorOrigin={{vertical: "top", horizontal: "right" }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert
           onClose={() => setOpen(false)}
           severity={severity}
           variant="filled"
-          sx={{ width: "100%" , backgroundColor: "#763abb", color: "#ffffff"}}
+          sx={{ width: "100%", backgroundColor: "#763abb", color: "#ffffff" }}
         >
           {message}
         </Alert>
