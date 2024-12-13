@@ -64,7 +64,7 @@ const MyWorkoutPlan = () => {
           setErrorMessage("");
         } else {
           setWorkoutPlans([]);
-          setErrorMessage(data.message || "Errore nel recupero delle schede.");
+          setErrorMessage("NESSUNA SCHEDA DI ALLENAMENTO TROVATA!");
         }
       } catch (error) {
         console.error("Errore nel recupero delle schede:", error);
@@ -208,7 +208,7 @@ const MyWorkoutPlan = () => {
           <p>Caricamento in corso...</p>
         </div>
       ) : workoutPlans.length === 0 ? (
-        <p>Non hai ancora creato schede di allenamento.</p>
+        <p>Chiedi a un amministratore di crearne una per te.</p>
       ) : (
         workoutPlans.map((plan) => (
           <div key={plan.id} className="workout-plan-section">
