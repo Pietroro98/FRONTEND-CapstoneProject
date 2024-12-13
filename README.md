@@ -1,9 +1,11 @@
-# My Ghisa Gym App
+# My Ghisa Gym App 🏋️‍♂️
 
 Un'applicazione web per la gestione dei piani di allenamento, la registrazione degli utenti, la visualizzazione degli esercizi, e la gestione dei piani personalizzati. Realizzata con React, Redux, Bootstrap, Material-UI e altre librerie moderne.
 
+😊![Preview del progetto](./src/Assets/Imgs/HomePagePrewiew.png)
 
-## Funzionalità
+
+## Funzionalità 🚀
 
 - **Registrazione e Login**: Gli utenti possono registrarsi e accedere con il proprio account.
 - **Gestione Account**: Gli utenti possono modificare i propri dati personali e caricare un avatar.
@@ -12,7 +14,7 @@ Un'applicazione web per la gestione dei piani di allenamento, la registrazione d
 - **Feedback dell'utente**: Notifiche di successo e errore tramite Snackbar.
 
 
-## Tecnologie Utilizzate
+## Tecnologie Utilizzate 💻
 
 - **React**: Per costruire l'interfaccia utente.
 - **Redux**: Per la gestione dello stato globale dell'app.
@@ -23,14 +25,14 @@ Un'applicazione web per la gestione dei piani di allenamento, la registrazione d
 - **FontAwesome**: Per l'uso di icone vettoriali nell'interfaccia utente.
 
 
-## Prerequisiti
+## Prerequisiti 📦
 
 Prima di iniziare, assicurati di avere i seguenti strumenti installati:
 
 - **Node.js** (versione 16 o superiore): [https://nodejs.org/](https://nodejs.org/)
 - **npm** (Node Package Manager): Viene installato automaticamente con Node.js.
 
-## Installazione
+## Installazione 🛠️
 
 1. **Scarica il progetto come ZIP**:
    - Vai su [https://github.com/Pietroro98/FRONTEND-CapstoneProject](https://github.com/Pietroro98/FRONTEND-CapstoneProject) e clicca sul pulsante **Code**, quindi seleziona **Download ZIP**.
@@ -56,11 +58,11 @@ Prima di iniziare, assicurati di avere i seguenti strumenti installati:
 5. **Visualizza l'app**:
    - Apri il tuo browser e vai su [http://localhost:3000](http://localhost:3000) per vedere l'app in esecuzione.
 
-# Collegamento al Backend del mio progetto
+# Collegamento al Backend del mio progetto 🌍
 Visita il Back-end del mio progetto **My Ghisa Gym**
 --> (https://github.com/Pietroro98/BACKEND-CapstoneProject)
 
-## Learn More
+## Learn More 📚
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
