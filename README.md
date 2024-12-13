@@ -24,7 +24,9 @@ Un'applicazione web per la gestione dei piani di allenamento, la registrazione d
 - **Framer Motion**: Per animazioni fluide e interattive nei componenti.
 - **FontAwesome**: Per l'uso di icone vettoriali nell'interfaccia utente.
 
-
+# Collegamento al Backend del mio progetto 🌍
+Visita il Back-end del mio progetto **My Ghisa Gym**
+👉(https://github.com/Pietroro98/BACKEND-CapstoneProject)👈
 ## Prerequisiti 📦
 
 Prima di iniziare, assicurati di avere i seguenti strumenti installati:
@@ -58,9 +60,6 @@ Prima di iniziare, assicurati di avere i seguenti strumenti installati:
 5. **Visualizza l'app**:
    - Apri il tuo browser e vai su [http://localhost:3000](http://localhost:3000) per vedere l'app in esecuzione.
 
-# Collegamento al Backend del mio progetto 🌍
-Visita il Back-end del mio progetto **My Ghisa Gym**
-👉(https://github.com/Pietroro98/BACKEND-CapstoneProject)👈
 
 ## Learn More 📚
 
