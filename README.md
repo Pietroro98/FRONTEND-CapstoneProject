@@ -1,43 +1,62 @@
-# Getting Started with Create React App
+# My Ghisa Gym App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Un'applicazione web per la gestione dei piani di allenamento, la registrazione degli utenti, la visualizzazione degli esercizi, e la gestione dei piani personalizzati. Realizzata con React, Redux, Bootstrap, Material-UI e altre librerie moderne.
 
-## Available Scripts
 
-In the project directory, you can run:
+## Funzionalità
 
-### `npm start`
+- **Registrazione e Login**: Gli utenti possono registrarsi e accedere con il proprio account.
+- **Gestione Account**: Gli utenti possono modificare i propri dati personali e caricare un avatar.
+- **Piani di Allenamento**: Creazione e gestione dei piani di allenamento personalizzati.
+- **Back Office**: Sezione amministrativa per aggiungere, modificare ed eliminare esercizi.
+- **Feedback dell'utente**: Notifiche di successo e errore tramite Snackbar.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tecnologie Utilizzate
 
-### `npm test`
+- **React**: Per costruire l'interfaccia utente.
+- **Redux**: Per la gestione dello stato globale dell'app.
+- **React Router**: Per gestire la navigazione tra le pagine.
+- **Material UI**: Per le componenti UI (ad esempio,Navbar, Snackbar, Alert etc..).
+- **React Bootstrap**: Per la struttura e i layout responsivi.
+- **Framer Motion**: Per animazioni fluide e interattive nei componenti.
+- **FontAwesome**: Per l'uso di icone vettoriali nell'interfaccia utente.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Prerequisiti
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Prima di iniziare, assicurati di avere i seguenti strumenti installati:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Node.js** (versione 16 o superiore): [https://nodejs.org/](https://nodejs.org/)
+- **npm** (Node Package Manager): Viene installato automaticamente con Node.js.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Installazione
 
-### `npm run eject`
+1. **Scarica il progetto come ZIP**:
+   - Vai su [https://github.com/Pietroro98/FRONTEND-CapstoneProject](https://github.com/Pietroro98/FRONTEND-CapstoneProject) e clicca sul pulsante **Code**, quindi seleziona **Download ZIP**.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Estrai il file ZIP**:
+   - Estrai il contenuto dell'archivio nella tua cartella preferita.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. **Installa le dipendenze**:
+   - Apri il terminale o il prompt dei comandi e naviga nella cartella dove hai estratto il progetto.
+   - Esegui il comando per installare tutte le dipendenze necessarie:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+     ```bash
+     npm install
+     ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. **Avvia l'app**:
+   - Esegui il comando per avviare l'app in modalità di sviluppo:
+
+     ```bash
+     npm start
+     ```
+
+5. **Visualizza l'app**:
+   - Apri il tuo browser e vai su [http://localhost:3000](http://localhost:3000) per vedere l'app in esecuzione.
+
+
 
 ## Learn More
 

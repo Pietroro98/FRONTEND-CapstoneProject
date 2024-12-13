@@ -7,6 +7,7 @@ import { faDumbbell } from "@fortawesome/free-solid-svg-icons";
 import NavbarButton from "../Buttons/NavbarButton";
 import { useState } from "react";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+
 function MyNavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleNavbar = () => {
