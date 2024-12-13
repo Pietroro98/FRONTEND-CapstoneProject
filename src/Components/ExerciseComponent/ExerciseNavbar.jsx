@@ -92,7 +92,7 @@ function ExerciseNavbar() {
     setOpen(true);
 
     setTimeout(() => {
-      navigate("/register");
+      navigate("/login");
     }, 1500);
   };
 
