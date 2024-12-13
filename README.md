@@ -26,7 +26,7 @@ Un'applicazione web per la gestione dei piani di allenamento, la registrazione d
 
 # Collegamento al Backend del mio progetto 🌍
 Visita il Back-end del mio progetto **My Ghisa Gym**
-👉(https://github.com/Pietroro98/BACKEND-CapstoneProject)👈
+👉 (https://github.com/Pietroro98/BACKEND-CapstoneProject) 👈
 ## Prerequisiti 📦
 
 Prima di iniziare, assicurati di avere i seguenti strumenti installati:
